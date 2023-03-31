@@ -12,7 +12,12 @@ from omegaconf import OmegaConf
 
 
 username = 'slerman'
+remote_name = 'iris/retina'  # TODO
 
+
+UnifiedML_path = f'/scratch/{username}/UnifiedML' if 'bluehive' in remote_name \
+    else f'/home/cxu-serve/u1/{username}/UnifiedML'
+sys.argv.extend(['-cd', UnifiedML_path + '/Hyperparams'])  # Adds UnifiedML's Hyperparams to Hydra's .yaml search path
 
 sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
 meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
