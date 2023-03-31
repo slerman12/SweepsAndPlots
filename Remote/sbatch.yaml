@@ -1,0 +1,26 @@
+defaults:
+  - args
+  - _self_
+  - task@_global_: atari/pong
+
+num_gpus: 1
+gpu: 'K80|V100|A100|RTX'
+mem: 20
+time: '3-00:00:00'
+reservation_id: null
+task_dir: ${suite}/${task_name}  # Must set manually for non <suite>/<task_name> task-directory structures!
+task: ${task_dir}
+pseudonym: ${task_name}  # Can change as needed here, but interpolation doesn't seem to work via command line
+remote_name: 'bluehive'
+
+
+hydra:
+  run:
+    dir: ./
+  sweep:
+    dir: ./
+    subdir: ./
+  launcher:
+    _target_: hydra._internal.core_plugins.basic_launcher.BasicLauncher
+  sweeper:
+    _target_: hydra._internal.core_plugins.basic_sweeper.BasicSweeper
