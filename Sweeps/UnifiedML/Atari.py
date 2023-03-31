@@ -21,10 +21,8 @@ runs.sweep = [
     'stddev_schedule="linear(1.0,0.1,20000)"'
     Agent=Agents.AC2Agent
     experiment=Atari26-LessExplore
-    time="5-00:00:00"
     mem=50
     autocast=true
-    capacity=1000000
     """,  # Note: Manually set "pseudonym" to task_name in sbatch.yaml
 ]
 

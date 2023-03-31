@@ -4,7 +4,7 @@ defaults:
   - task@_global_: atari/pong
 
 num_gpus: 1
-gpu: 'K80|V100|A100|RTX'
+gpu: 'K80|V100|A100|RTX|1080ti|titanx'
 mem: 20
 time: '3-00:00:00'
 reservation_id: null
