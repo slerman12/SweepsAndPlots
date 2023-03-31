@@ -1,6 +1,6 @@
 defaults:
   - _self_
-  - atari@_global_: pong
+  - task@_global_: atari/pong
 
 num_gpus: 1
 gpu: 'K80|V100|A100|RTX'
