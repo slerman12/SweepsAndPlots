@@ -47,10 +47,10 @@ def getattr_recursive(__o, name):
 def main(args):
     # Paths depending on remote name
 
-    path = f'/scratch/{username}/UnifiedML' if 'bluehive' in args.remote_name \
+    path = f'/scratch/{username}/UnifiedML' if 'bluehive' in remote_name \
         else f'/home/cxu-serve/u1/{username}/UnifiedML'
 
-    conda_activate = f'source /home/{username}/miniconda3/bin/activate' if 'bluehive' in args.remote_name \
+    conda_activate = f'source /home/{username}/miniconda3/bin/activate' if 'bluehive' in remote_name \
         else 'conda activate'
 
     Path(args.logger.path).mkdir(parents=True, exist_ok=True)
@@ -89,13 +89,13 @@ def main(args):
     script = f"""#!/bin/bash
 #SBATCH -c {args.num_workers + 1}
 {f'#SBATCH -p gpu --gres=gpu:{args.num_gpus}' if args.num_gpus else ''}
-{'#SBATCH -p csxu -A cxu22_lab' if args.remote_name == 'bluehive_cxu' else ''}
+{'#SBATCH -p csxu -A cxu22_lab' if remote_name == 'bluehive_cxu' else ''}
 {f'#SBATCH -p reserved --reservation={username}-{args.reservation_id}' if args.reservation_id else ''}
 #SBATCH -t {args.time} -o {args.logger.path}{args.task_name}_{args.seed}.log -J {args.pseudonym}
 #SBATCH --mem={args.mem}gb 
 {f'#SBATCH -C {args.gpu}' if args.num_gpus else ''}
 {cuda}
-{'module load gcc' if 'bluehive' in args.remote_name else ''}
+{'module load gcc' if 'bluehive' in remote_name else ''}
 wandb login {wandb_login_key}
 python3 Run.py {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """

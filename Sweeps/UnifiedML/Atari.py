@@ -25,7 +25,6 @@ runs.sweep = [
     mem=50
     autocast=true
     capacity=1000000
-    remote_name=bluehive_cxu
     """,  # Note: Manually set "pseudonym" to task_name in sbatch.yaml
 ]
 
