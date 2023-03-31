@@ -10,7 +10,8 @@ from pathlib import Path
 import hydra
 from omegaconf import OmegaConf
 
-from VPN import username
+
+username = 'slerman'
 
 
 sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
@@ -76,7 +77,7 @@ def main(args):
 
     # gpu = '$GPU_TYPE'  # Can add to python script e.g. experiment='name_{gpu}'
 
-    # cuda = f'source /home/{args.username}/miniconda3/bin/activate AGI'  # One Conda env for any GPU
+    # cuda = f'source /home/{username}/miniconda3/bin/activate AGI'  # One Conda env for any GPU
 
     wandb_login_key = '55c12bece18d43a51c2fcbcb5b7203c395f9bc40'
 
