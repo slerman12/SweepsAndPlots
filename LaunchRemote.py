@@ -8,28 +8,26 @@ from pexpect import pxssh
 
 from VPN import get_pass, connect_vpn, username
 
-
 sweep_path = 'UnifiedML/Atari'
 branch = 'CreatorV7'
-remote_name = 'iris/retina'
-
+remote_name = 'iris/retina'  # TODO All of these should be pulled from the Sweeps file specified via sysarg or central
+app = 'UnifiedML'
 
 if 'iris/retina' in remote_name:
     server = 'slurm'
 
     username, password = username, ''
-    remote_path = f'/home/cxu-serve/u1/{username}'
+    remote_path = f'/home/cxu-serve/u1/{username}/{app}'
     conda = f'conda activate AGI'
 elif 'bluehive' in remote_name:
     server = 'bluehive.circ.rochester.edu'
     connect_vpn()
 
     username, password = username, get_pass()
-    remote_path = f'/scratch/{username}'
+    remote_path = f'/scratch/{username}/{app}'
     conda = 'source /home/{username}/miniconda3/bin/activate CUDA11.3'
 else:
     assert False, 'Invalid remote name.'
-
 
 runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().runs
 
@@ -37,9 +35,9 @@ runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().run
 try:
     s = pxssh.pxssh()
     s.login(server, username, password)
-    s.sendline(f'cd {remote_path}/UnifiedML')      # Run a command
-    s.prompt()                                     # Match the prompt
-    print(s.before.decode("utf-8"))                # Print everything before the prompt.
+    s.sendline(f'cd {remote_path}')  # Run a command
+    s.prompt()  # Match the prompt
+    print(s.before.decode("utf-8"))  # Print everything before the prompt.
     s.sendline(f'git fetch origin')
     s.prompt()
     print(s.before.decode("utf-8"))

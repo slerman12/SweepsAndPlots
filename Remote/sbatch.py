@@ -12,15 +12,25 @@ from omegaconf import OmegaConf
 
 
 username = 'slerman'
-remote_name = 'iris/retina'  # TODO
+remote_name = 'iris/retina'  # TODO This can be a sysarg. Just extract it manually.
+app = 'UnifiedML'
+run = 'Run.py'
+
+path = f'/scratch/{username}/{app}' if 'bluehive' in remote_name \
+    else f'/home/cxu-serve/u1/{username}/{app}'
+conda_activate = f'source /home/{username}/miniconda3/bin/activate' if 'bluehive' in remote_name \
+    else 'conda activate'
+conda = ''.join([f'*"{gpu}"*)\n{conda_activate} {env}\n;;\n'
+                 for gpu, env in [('K80', 'CUDA10.2'), ('', 'AGI')]])  # Conda envs w.r.t. GPU, '' means else
+cuda = f'GPU_TYPE' \
+       f'=$(nvidia-smi --query-gpu=gpu_name --format=csv | tail  -1)\ncase $GPU_TYPE in\n{conda}esac'
+# cuda = f'source /home/{username}/miniconda3/bin/activate AGI'  # One Conda env for any GPU
+wandb_login_key = '55c12bece18d43a51c2fcbcb5b7203c395f9bc40'
 
 
 sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
 meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
-
-UnifiedML_path = f'/scratch/{username}/UnifiedML' if 'bluehive' in remote_name \
-    else f'/home/cxu-serve/u1/{username}/UnifiedML'
-sys.argv.extend(['-cd', UnifiedML_path + '/Hyperparams'])  # Adds UnifiedML's Hyperparams to Hydra's .yaml search path
+sys.argv.extend(['-cd', path + '/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
 
 # Format path names
 # e.g. Checkpoints/Agents.DQNAgent -> Checkpoints/DQNAgent
@@ -45,14 +55,6 @@ def getattr_recursive(__o, name):
 
 @hydra.main(config_path='./', config_name='sbatch')
 def main(args):
-    # Paths depending on remote name
-
-    path = f'/scratch/{username}/UnifiedML' if 'bluehive' in remote_name \
-        else f'/home/cxu-serve/u1/{username}/UnifiedML'
-
-    conda_activate = f'source /home/{username}/miniconda3/bin/activate' if 'bluehive' in remote_name \
-        else 'conda activate'
-
     Path(args.logger.path).mkdir(parents=True, exist_ok=True)
 
     if 'task' in sys_args:
@@ -73,18 +75,7 @@ def main(args):
     if 'experiment' in sys_args:
         args.experiment = f'"{args.experiment}"'
 
-    # GPU bash script switch
-
-    conda = ''.join([f'*"{gpu}"*)\n{conda_activate} {env}\n;;\n'
-                     for gpu, env in [('K80', 'CUDA10.2'), ('', 'AGI')]])  # Conda envs w.r.t. GPU, '' means else
-    cuda = f'GPU_TYPE' \
-           f'=$(nvidia-smi --query-gpu=gpu_name --format=csv | tail  -1)\ncase $GPU_TYPE in\n{conda}esac'
-
     # gpu = '$GPU_TYPE'  # Can add to python script e.g. experiment='name_{gpu}'
-
-    # cuda = f'source /home/{username}/miniconda3/bin/activate AGI'  # One Conda env for any GPU
-
-    wandb_login_key = '55c12bece18d43a51c2fcbcb5b7203c395f9bc40'
 
     script = f"""#!/bin/bash
 #SBATCH -c {args.num_workers + 1}
@@ -96,8 +87,7 @@ def main(args):
 {f'#SBATCH -C {args.gpu}' if args.num_gpus else ''}
 {cuda}
 {'module load gcc' if 'bluehive' in remote_name else ''}
-wandb login {wandb_login_key}
-python3 Run.py {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
+python3 {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
 
     os.chdir(path)
