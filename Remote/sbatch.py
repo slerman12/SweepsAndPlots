@@ -32,6 +32,8 @@ sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
 meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
 sys.argv.extend(['-cd', path + '/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
 
+os.chdir(path)
+
 # Format path names
 # e.g. Checkpoints/Agents.DQNAgent -> Checkpoints/DQNAgent
 OmegaConf.register_new_resolver("format", lambda name: name.split('.')[-1])
@@ -91,7 +93,6 @@ wandb login {wandb_login_key}
 cd {path}
 python3 {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
-    os.chdir(path)
 
     # Write script
     with open('./sbatch_script', 'w') as file:
