@@ -35,6 +35,12 @@ runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().run
 try:
     s = pxssh.pxssh()
     s.login(server, username, password)
+    s.sendline(f'cd {remote_path}/SweepsAndPlots')
+    s.prompt()
+    print(s.before.decode("utf-8"))
+    s.sendline(f'git pull')
+    s.prompt()
+    print(s.before.decode("utf-8"))
     s.sendline(f'cd {remote_path}/{app}')  # Run a command
     s.prompt()  # Match the prompt
     print(s.before.decode("utf-8"))  # Print everything before the prompt.
@@ -56,20 +62,11 @@ try:
     s.sendline(conda)
     s.prompt()
     print(s.before.decode("utf-8"))
-    s.sendline(f'cd {remote_path}/SweepsAndPlots')
-    s.prompt()
-    print(s.before.decode("utf-8"))
-    s.sendline(f'git pull')
-    s.prompt()
-    print(s.before.decode("utf-8"))
-    s.sendline(f'cd ./Remote')
-    s.prompt()
-    print(s.before.decode("utf-8"))
     for i, hyperparams in enumerate(runs.sweep):
         hyperparams = "\t".join(hyperparams.splitlines())
         print(f'Set: {i + 1}')
-        print(f'python sbatch.py -m {hyperparams}   remote_name={remote_name}"\n')
-        s.sendline(f'python sbatch.py -m {hyperparams}   remote_name={remote_name}')
+        print(f'python {remote_path}/SweepsAndPlots/sbatch.py -m {hyperparams}   remote_name={remote_name}"\n')
+        s.sendline(f'python {remote_path}/SweepsAndPlots/sbatch.py -m {hyperparams}   remote_name={remote_name}')
         s.prompt()
         print(s.before.decode("utf-8"))
     s.logout()
