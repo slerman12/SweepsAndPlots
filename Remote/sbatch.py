@@ -2,6 +2,7 @@
 #
 # This source code is licensed under the MIT license found in the
 # MIT_LICENSE file in the root directory of this source tree.
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -87,16 +88,17 @@ def main(args):
 {cuda}
 {'module load gcc' if 'bluehive' in remote_name else ''}
 wandb login {wandb_login_key}
-python3 {path}/{run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
+python3 {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
 
     # Write script
-    with open('./sbatch_script', 'w') as file:
+    with open(path + '/sbatch_script', 'w') as file:
         file.write(script)
 
     # Launch script (with error checking / re-launching)
     while True:
         try:
+            os.chdir(path)
             success = str(subprocess.check_output([f'sbatch ./sbatch_script'], shell=True))
             print(success[2:][:-3])
             if "error" not in success:
