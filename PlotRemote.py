@@ -91,7 +91,7 @@ if runs.sftp:
     os.chdir(cwd)
 
 
-plot = SourceFileLoader("UnifiedML", UnifiedML_local_path).load_module().Plot.plot
+plot = SourceFileLoader("Plot", UnifiedML_local_path + '/Plot.py').load_module().plot
 
 # Generate each plot
 for plot_train in [False, True]:
