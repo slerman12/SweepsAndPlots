@@ -32,7 +32,7 @@ sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
 meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
 sys.argv.extend(['-cd', path + '/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
 
-os.chdir(path)
+# os.chdir(path)
 
 # Format path names
 # e.g. Checkpoints/Agents.DQNAgent -> Checkpoints/DQNAgent
@@ -94,13 +94,13 @@ python3 {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" fo
 """
 
     # Write script
-    with open('./sbatch_script', 'w') as file:
+    with open(path + '/sbatch_script', 'w') as file:
         file.write(script)
 
     # Launch script (with error checking / re-launching)
     while True:
         try:
-            success = str(subprocess.check_output([f'sbatch ./sbatch_script'], shell=True))
+            success = str(subprocess.check_output([f'cd {path};sbatch ./sbatch_script'], shell=True))
             print(success[2:][:-3])
             if "error" not in success:
                 break
