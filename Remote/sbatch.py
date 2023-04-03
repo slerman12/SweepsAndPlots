@@ -2,7 +2,6 @@
 #
 # This source code is licensed under the MIT license found in the
 # MIT_LICENSE file in the root directory of this source tree.
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -32,8 +31,6 @@ sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
 meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
 sys.argv.extend(['-cd', path + '/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
 
-os.chdir(path)
-
 # Format path names
 # e.g. Checkpoints/Agents.DQNAgent -> Checkpoints/DQNAgent
 OmegaConf.register_new_resolver("format", lambda name: name.split('.')[-1])
@@ -57,7 +54,7 @@ def getattr_recursive(__o, name):
 
 @hydra.main(config_path='./', config_name='sbatch')
 def main(args):
-    Path(args.logger.path).mkdir(parents=True, exist_ok=True)
+    Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
 
     if 'task' in sys_args:
         args.task = args.task.lower()
@@ -94,13 +91,13 @@ python3 {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" fo
 """
 
     # Write script
-    with open("./sbatch_script", "w") as file:
+    with open(path + '/sbatch_script', 'w') as file:
         file.write(script)
 
     # Launch script (with error checking / re-launching)
     while True:
         try:
-            success = str(subprocess.check_output(['sbatch {}'.format("sbatch_script")], shell=True))
+            success = str(subprocess.check_output([f'sbatch {path}/sbatch_script'], shell=True))
             print(success[2:][:-3])
             if "error" not in success:
                 break
