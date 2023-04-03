@@ -87,7 +87,7 @@ def main(args):
 {cuda}
 {'module load gcc' if 'bluehive' in remote_name else ''}
 wandb login {wandb_login_key}
-python3 {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
+python3 {path}/{run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
 
     # Write script
@@ -97,7 +97,7 @@ python3 {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" fo
     # Launch script (with error checking / re-launching)
     while True:
         try:
-            success = str(subprocess.check_output([f'cd {path}', 'sbatch sbatch_script'], shell=True))
+            success = str(subprocess.check_output([f'sbatch {path}/sbatch_script'], shell=True))
             print(success[2:][:-3])
             if "error" not in success:
                 break
