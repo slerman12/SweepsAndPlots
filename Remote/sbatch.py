@@ -92,13 +92,13 @@ python3 {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" fo
 """
 
     # Write script
-    with open('./sbatch_script', 'w') as file:
+    with open(path + '/sbatch_script', 'w') as file:
         file.write(script)
 
     # Launch script (with error checking / re-launching)
     while True:
         try:
-            success = str(subprocess.check_output([f'sbatch ./sbatch_script'], shell=True))
+            success = str(subprocess.check_output([f'sbatch {path}/sbatch_script'], shell=True))
             print(success[2:][:-3])
             if "error" not in success:
                 break
