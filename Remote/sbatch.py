@@ -2,6 +2,7 @@
 #
 # This source code is licensed under the MIT license found in the
 # MIT_LICENSE file in the root directory of this source tree.
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -90,15 +91,16 @@ wandb login {wandb_login_key}
 cd {path}
 python3 {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
+    os.chdir(path)
 
     # Write script
-    with open(path + '/sbatch_script', 'w') as file:
+    with open('./sbatch_script', 'w') as file:
         file.write(script)
 
     # Launch script (with error checking / re-launching)
     while True:
         try:
-            success = str(subprocess.check_output([f'sbatch {path}/sbatch_script'], shell=True))
+            success = str(subprocess.check_output([f'sbatch ./sbatch_script'], shell=True))
             print(success[2:][:-3])
             if "error" not in success:
                 break
