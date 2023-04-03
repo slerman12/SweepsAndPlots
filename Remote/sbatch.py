@@ -3,7 +3,6 @@
 # This source code is licensed under the MIT license found in the
 # MIT_LICENSE file in the root directory of this source tree.
 import os
-import pathlib
 import subprocess
 import sys
 from pathlib import Path
@@ -33,6 +32,8 @@ sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
 meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
 sys.argv.extend(['-cd', path + '/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
 
+os.chdir(path)
+
 # Format path names
 # e.g. Checkpoints/Agents.DQNAgent -> Checkpoints/DQNAgent
 OmegaConf.register_new_resolver("format", lambda name: name.split('.')[-1])
@@ -56,9 +57,6 @@ def getattr_recursive(__o, name):
 
 @hydra.main(config_path='./', config_name='sbatch')
 def main(args):
-    sbatch_path = str(pathlib.Path(__file__).parent.resolve())
-    os.chdir(path)
-
     Path(args.logger.path).mkdir(parents=True, exist_ok=True)
 
     if 'task' in sys_args:
@@ -109,9 +107,6 @@ python3 {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" fo
         except Exception:
             pass
         print("Errored... trying again")
-
-    os.chdir(sbatch_path)
-
     print("Success!")
 
 
