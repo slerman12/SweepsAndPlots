@@ -55,6 +55,8 @@ def getattr_recursive(__o, name):
 
 @hydra.main(config_path='./', config_name='sbatch')
 def main(args):
+    os.chdir(path)
+
     Path(args.logger.path).mkdir(parents=True, exist_ok=True)
 
     if 'task' in sys_args:
@@ -90,8 +92,6 @@ def main(args):
 wandb login {wandb_login_key}
 python3 {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
-
-    os.chdir(path)
 
     # Write script
     with open("./sbatch_script", "w") as file:
