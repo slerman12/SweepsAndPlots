@@ -17,14 +17,14 @@ if 'iris/retina' in remote_name:
     server = 'slurm'
 
     username, password = username, ''
-    remote_path = f'/home/cxu-serve/u1/{username}/{app}'
+    remote_path = f'/home/cxu-serve/u1/{username}'
     conda = f'conda activate AGI'
 elif 'bluehive' in remote_name:
     server = 'bluehive.circ.rochester.edu'
     connect_vpn()
 
     username, password = username, get_pass()
-    remote_path = f'/scratch/{username}/{app}'
+    remote_path = f'/scratch/{username}'
     conda = 'source /home/{username}/miniconda3/bin/activate CUDA11.3'
 else:
     assert False, 'Invalid remote name.'
@@ -35,7 +35,7 @@ runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().run
 try:
     s = pxssh.pxssh()
     s.login(server, username, password)
-    s.sendline(f'cd {remote_path}')  # Run a command
+    s.sendline(f'cd {remote_path}/{app}')  # Run a command
     s.prompt()  # Match the prompt
     print(s.before.decode("utf-8"))  # Print everything before the prompt.
     s.sendline(f'git fetch origin')

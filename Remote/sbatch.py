@@ -84,9 +84,10 @@ def main(args):
 {f'#SBATCH -p reserved --reservation={username}-{args.reservation_id}' if args.reservation_id else ''}
 #SBATCH -t {args.time} -o {args.logger.path}{args.task_name}_{args.seed}.log -J {args.pseudonym}
 #SBATCH --mem={args.mem}gb 
-{f'#SBATCH -C {args.gpu}' if args.num_gpus else ''}
+{f'#SBATCH -C {args.gpu}' if args.num_gpus and 'bluehive' in remote_name else ''}
 {cuda}
 {'module load gcc' if 'bluehive' in remote_name else ''}
+wandb login {wandb_login_key}
 python3 {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
 
