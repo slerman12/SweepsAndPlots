@@ -90,7 +90,7 @@ def main(args):
 {cuda}
 {'module load gcc' if 'bluehive' in remote_name else ''}
 wandb login {wandb_login_key}
-python {run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
+python {path}/{run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
 
     # Write script
