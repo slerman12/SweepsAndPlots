@@ -8,11 +8,12 @@ from pexpect import pxssh
 
 from VPN import get_pass, connect_vpn, username
 
-sweep_path = 'UnifiedML/Atari'
-branch = 'CreatorV7'
-remote_name = 'iris/retina'  # TODO All of these should be pulled from the Sweeps file specified via sysarg or central
-app = 'UnifiedML'
+sweep_path = 'UnifiedML/Atari'  # TODO Central
+branch = 'CreatorV7'  # TODO runs
+remote_name = 'bluehive'  # TODO All of these should be pulled from the Sweeps file specified via sysarg or central
+app = 'UnifiedML'  # TODO runs
 
+# TODO Central
 if 'iris/retina' in remote_name:
     server = 'slurm'
 

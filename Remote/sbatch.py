@@ -2,7 +2,6 @@
 #
 # This source code is licensed under the MIT license found in the
 # MIT_LICENSE file in the root directory of this source tree.
-import os
 import subprocess
 import sys
 from pathlib import Path
@@ -12,7 +11,7 @@ from omegaconf import OmegaConf
 
 
 username = 'slerman'
-remote_name = 'iris/retina'  # TODO This can be a sysarg. Just extract it manually.
+remote_name = 'bluehive'  # TODO This can be a sysarg. Just extract it manually.
 app = 'UnifiedML'
 run = 'Run.py'
 
@@ -31,8 +30,6 @@ wandb_login_key = '55c12bece18d43a51c2fcbcb5b7203c395f9bc40'
 sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
 meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
 sys.argv.extend(['-cd', path + '/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
-
-# os.chdir(path)
 
 # Format path names
 # e.g. Checkpoints/Agents.DQNAgent -> Checkpoints/DQNAgent
