@@ -75,7 +75,7 @@ if runs.sftp:
         p.sendline(f"lcd {local_path}")
         p.expect('sftp> ')
         # SFTP can't access ~/, so need full path
-        lab_paths = ['/localdisk2/sam', '/home/vax10/u38/slerman', '/home/cxu-serve/u1/slerman']
+        lab_paths = ['/localdisk2/sam', '/home/vax10/u38/slerman', '/cxu-serve/u1/slerman']
         for i, path in enumerate(lab_paths):  # Note: latest one overrides
             p.sendline(f'cd {path}/{app}')
             p.expect('sftp> ')

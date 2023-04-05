@@ -10,7 +10,7 @@ from VPN import get_pass, connect_vpn, username
 
 sweep_path = 'UnifiedML/Atari'  # TODO Central
 branch = 'CreatorV7'  # TODO runs
-remote_name = 'bluehive'  # TODO All of these should be pulled from the Sweeps file specified via sysarg or central
+remote_name = 'iris/retina'  # TODO All of these should be pulled from the Sweeps file specified via sysarg or central
 app = 'UnifiedML'  # TODO runs
 
 # TODO Central
@@ -18,7 +18,7 @@ if 'iris/retina' in remote_name:
     server = 'slurm'
 
     username, password = username, ''
-    remote_path = f'/home/cxu-serve/u1/{username}'
+    remote_path = f'/cxu-serve/u1/{username}'
     conda = f'conda activate AGI'
 elif 'bluehive' in remote_name:
     server = 'bluehive.circ.rochester.edu'

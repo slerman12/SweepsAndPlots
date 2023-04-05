@@ -11,12 +11,12 @@ from omegaconf import OmegaConf
 
 
 username = 'slerman'
-remote_name = 'bluehive'  # TODO This can be a sysarg. Just extract it manually.
+remote_name = 'iris/retina'  # TODO This can be a sysarg. Just extract it manually.
 app = 'UnifiedML'
 run = 'Run.py'
 
 path = f'/scratch/{username}/{app}' if 'bluehive' in remote_name \
-    else f'/home/cxu-serve/u1/{username}/{app}'
+    else f'/cxu-serve/u1/{username}/{app}'
 conda_activate = f'source /home/{username}/miniconda3/bin/activate' if 'bluehive' in remote_name \
     else 'conda activate'
 conda = ''.join([f'*"{gpu}"*)\n{conda_activate} {env}\n;;\n'
