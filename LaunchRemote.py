@@ -26,7 +26,7 @@ elif 'bluehive' in remote_name:
 
     username, password = username, get_pass()
     remote_path = f'/scratch/{username}'
-    conda = 'source /home/{username}/miniconda3/bin/activate CUDA11.3'
+    conda = f'source /home/{username}/miniconda3/bin/activate AGI'
 else:
     assert False, 'Invalid remote name.'
 
