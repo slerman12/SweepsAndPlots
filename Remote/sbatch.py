@@ -15,8 +15,8 @@ remote_name = 'bluehive_cxu'  # TODO This can be a sysarg. Just extract it manua
 app = 'XRDs'
 run = 'XRD.py'
 
-remote_path = f'/scratch/{username}' if 'bluehive' in remote_name else f'/cxu-serve/u1/{username}'
-path = f'{remote_path}/{app}'
+path = f'/scratch/{username}/{app}' if 'bluehive' in remote_name \
+    else f'/cxu-serve/u1/{username}/{app}'
 conda_activate = f'source /home/{username}/miniconda3/bin/activate' if 'bluehive' in remote_name \
     else 'conda activate'
 conda = ''.join([f'*"{gpu}"*)\n{conda_activate} {env}\n;;\n'
@@ -26,27 +26,10 @@ cuda = f'GPU_TYPE' \
 # cuda = f'source /home/{username}/miniconda3/bin/activate AGI'  # One Conda env for any GPU
 wandb_login_key = '55c12bece18d43a51c2fcbcb5b7203c395f9bc40'
 
+
 sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
-defaults = {'num_gpus': 1,
-            'gpu': "'K80|V100|A100|RTX'",
-            'mem': 20,
-            'time': '3-00:00:00',
-            'reservation_id': 'null',
-            # Can change as needed here, but interpolation doesn't seem to work via command line
-            'pseudonym': '${task_name}',
-            'remote_name': 'bluehive'}
-
-for default, value in defaults.items():
-    if default not in sys_args:
-        sys.argv.append(f'{default}={value}')
-
-for i, arg in enumerate(sys.argv[1:]):
-    if arg.split('=')[0] in defaults.keys():
-        sys.argv[i + 1] = '+' + arg
-
-meta = defaults.keys() | {'-m'}
-
-sys.argv.extend(['-cd', remote_path + '/UnifiedML/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
+meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
+sys.argv.extend(['-cd', path + '/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
 
 # Format path names
 # e.g. Checkpoints/Agents.DQNAgent -> Checkpoints/DQNAgent
@@ -69,19 +52,18 @@ def getattr_recursive(__o, name):
     return __o
 
 
-@hydra.main(config_path=f'{remote_path}/{app}/Hyperparams', config_name='args')
+@hydra.main(config_path='./', config_name='sbatch')
 def main(args):
     Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
 
-    task = [arg.split('=')[1] for arg in sys.argv if arg.split('=')[0] == 'task'][0] if 'task' in sys_args else None
-    # if 'task' in sys_args:
-        # args.task = args.task.lower()
+    if 'task' in sys_args:
+        args.task = args.task.lower()
 
-        # if 'task=classify/custom' in sys.argv[1:]:
-        #     args.task = 'classify/custom'
+        if 'task=classify/custom' in sys.argv[1:]:
+            args.task = 'classify/custom'
 
-        # if 'task=supermario/mario' in sys.argv[1:]:
-        #     args.task = 'mario'  # Careful, custom suites/tasks might break
+        if 'task=supermario/mario' in sys.argv[1:]:
+            args.task = 'mario'  # Careful, custom suites/tasks might break
 
     if 'transform' in sys_args:
         args.transform = f'"{args.transform}"'.replace("'", '')
@@ -105,7 +87,7 @@ def main(args):
 {cuda}
 {'module load gcc' if 'bluehive' in remote_name else ''}
 wandb login {wandb_login_key}
-python {path}/{run} {'' if task is None else f'task={task}'} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
+python {path}/{run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
 
     # Write script

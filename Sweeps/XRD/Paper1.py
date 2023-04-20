@@ -14,7 +14,7 @@ runs.sweep = [
     +'dataset.train_eval_splits=[1, 0.5]'
     parallel=true
     num_gpus=8
-    mem=180""",
+    mem=160""",
 ]
 
 runs.plots = [
