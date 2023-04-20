@@ -34,7 +34,7 @@ for i, arg in enumerate(sys.argv[1:]):
     if arg.split('=')[0] not in meta and arg[0] != '+':
         sys.argv[i + 1] = '++' + arg
 print(sys.argv)
-sys.argv.extend(['-cd', path + '/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
+# sys.argv.extend(['-cd', path + '/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
 
 # Format path names
 # e.g. Checkpoints/Agents.DQNAgent -> Checkpoints/DQNAgent
