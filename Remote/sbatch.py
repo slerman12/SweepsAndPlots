@@ -11,9 +11,9 @@ from omegaconf import OmegaConf
 
 
 username = 'slerman'
-remote_name = 'iris/retina'  # TODO This can be a sysarg. Just extract it manually.
-app = 'UnifiedML'
-run = 'Run.py'
+remote_name = 'bluehive_cxu'  # TODO This can be a sysarg. Just extract it manually.
+app = 'XRDs'
+run = 'XRD.py'
 
 path = f'/scratch/{username}/{app}' if 'bluehive' in remote_name \
     else f'/cxu-serve/u1/{username}/{app}'

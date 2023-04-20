@@ -32,7 +32,7 @@ runs.sweep = [
     save_per_steps=200000
     replay.save=true
     'stddev_schedule="linear(1.0,0.1,20000)"'
-    Agent=Agents.DDPG.DDPGAgent
+    Policy=Agents.DDPG.DDPGPolicy
     experiment=Atari26-LessExplore
     mem=50
     autocast=true
@@ -55,8 +55,8 @@ runs.plots = [
     ['Atari26-LessExplore']
 ]
 
-runs.sftp = True
-runs.lab = False
+runs.sftp = False
+runs.lab = True
 runs.title = 'Atari-26'
 runs.steps = 1e6
 runs.write_tabular = True

@@ -13,8 +13,8 @@ import numpy as np
 from VPN import get_pass, connect_vpn, username
 
 
-app = 'UnifiedML'
-sweep_path = 'UnifiedML/Atari'
+app = 'XRDs'
+sweep_path = 'XRD/Paper1'
 UnifiedML_local_path = '../UnifiedML'
 
 

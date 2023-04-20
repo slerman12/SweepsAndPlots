@@ -8,10 +8,10 @@ from pexpect import pxssh
 
 from VPN import get_pass, connect_vpn, username
 
-sweep_path = 'UnifiedML/Atari'  # TODO Central
-branch = 'CreatorV7'  # TODO runs
-remote_name = 'iris/retina'  # TODO All of these should be pulled from the Sweeps file specified via sysarg or central
-app = 'UnifiedML'  # TODO runs
+sweep_path = 'XRD/Paper1'  # TODO Central
+branch = 'Dev'  # TODO runs
+remote_name = 'bluehive_cxu'  # TODO All of these should be pulled from the Sweeps file specified via sysarg or central
+app = 'XRDs'  # TODO runs
 
 # TODO Central
 if 'iris/retina' in remote_name:
