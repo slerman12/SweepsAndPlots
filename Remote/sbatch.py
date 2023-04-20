@@ -42,7 +42,7 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
 for i, arg in enumerate(sys.argv[1:]):
-    if arg.split('=') in meta:
+    if arg.split('=')[0] in meta:
         sys.argv[i + 1] = '+' + arg
 
 
