@@ -71,14 +71,16 @@ def main(args):
     Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
 
     if 'task' in sys_args:
-        args.task = args.task.lower()
+        # args.task = args.task.lower()
+        #
+        # classify_tasks = [Path(file).stem for file in os.listdir(path + '/Hyperparams/task/classify/')]
+        # if 'classify' in args.task and args.task.split('/')[1] not in classify_tasks:
+        #     args.task = [arg.split('=')[1] for arg in sys.argv if 'task' in arg][0]
 
-        classify_tasks = [Path(file).stem for file in os.listdir(path + '/Hyperparams/task/classify/')]
-        if 'classify' in args.task and args.task.split('/')[1] not in classify_tasks:
-            args.task = 'classify/custom'
+        # if 'task=supermario/mario' in sys.argv[1:]:
+        #     args.task = 'mario'  # Careful, custom suites/tasks might break
 
-        if 'task=supermario/mario' in sys.argv[1:]:
-            args.task = 'mario'  # Careful, custom suites/tasks might break
+        args.task = [arg.split('=')[1] for arg in sys.argv if 'task' in arg][0]
 
     if 'transform' in sys_args:
         args.transform = f'"{args.transform}"'.replace("'", '')
