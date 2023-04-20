@@ -4,7 +4,7 @@ from Sweeps.Templates import template
 # Note: norm may have not worked because "low" was set to "low" not "low_" in classify
 runs = template()
 
-runs.XRD.sweep = [
+runs.sweep = [
     # Large + RRUFF, No-Pool-CNN
     """task=npcnn
     task_name='${num_classes}-Way_ICSD-true_Open-Access-false_RRUFF-true_Soup-true'
@@ -14,14 +14,13 @@ runs.XRD.sweep = [
     +'dataset.train_eval_splits=[1, 0.5]'
     parallel=true
     num_gpus=8
-    mem=180
-    remote_name=bluehive_cxu""",
+    mem=180""",
 ]
 
-runs.XRD.plots = [
+runs.plots = [
     ['NPCNN'],
 ]
 
-runs.XRD.title = 'RRUFF'
-runs.XRD.sftp = True
-runs.XRD.lab = False
+runs.title = 'RRUFF'
+runs.sftp = True
+runs.lab = False
