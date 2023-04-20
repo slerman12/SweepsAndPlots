@@ -42,8 +42,8 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 # A boolean "not" operation for config
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
-# Import UnifiedML paths
-importlib.import_module(remote_path + '/UnifiedML')
+# Import UnifiedML path
+sys.path.append(remote_path + '/UnifiedML')
 
 
 def getattr_recursive(__o, name):
