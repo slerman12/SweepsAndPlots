@@ -55,11 +55,12 @@ def getattr_recursive(__o, name):
     if isinstance(__o, str) and '(' in __o:
         __o = '"' + __o.strip('"') + '"'
     return __o
-print(sys.argv)
+
 
 @hydra.main(config_path=f'{remote_path}/{app}/Hyperparams', config_name='args')
 def main(args):
     Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
+    print(args.task_name)
 
     if 'task' in sys_args:
         args.task = args.task.lower()
