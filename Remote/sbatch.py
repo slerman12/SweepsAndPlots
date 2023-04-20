@@ -51,7 +51,8 @@ if 'task' in sys_args:
     task = [arg.split('=')[1] for arg in sys.argv if 'task' in arg][0]
     for line in fileinput.input(os.path.dirname(__file__) + '/sbatch.yaml', inplace=True):
         if line == '  - task@_global_: atari/pong':
-            print(f'  - task@_global_: {task}', end='')
+            line = line.replace('atari/pong', task)
+        sys.stdout.write(line)
 
 
 def getattr_recursive(__o, name):
