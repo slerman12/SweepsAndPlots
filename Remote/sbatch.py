@@ -26,7 +26,7 @@ cuda = f'GPU_TYPE' \
 # cuda = f'source /home/{username}/miniconda3/bin/activate AGI'  # One Conda env for any GPU
 wandb_login_key = '55c12bece18d43a51c2fcbcb5b7203c395f9bc40'
 
-sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
+sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]} - {'task'}
 defaults = {'num_gpus': 1,
             'gpu': "'K80|V100|A100|RTX'",
             'mem': 20,
