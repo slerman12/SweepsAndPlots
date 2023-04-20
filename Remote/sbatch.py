@@ -2,7 +2,7 @@
 #
 # This source code is licensed under the MIT license found in the
 # MIT_LICENSE file in the root directory of this source tree.
-import importlib
+import importlib.util
 import subprocess
 import sys
 from pathlib import Path
@@ -43,9 +43,9 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
 # Import UnifiedML path
-importlib.util.module_from_spec(importlib.util.spec_from_file_location('UnifiedML',
-                                                                       remote_path + '/UnifiedML/__init__.py'))
-
+spec = importlib.util.spec_from_file_location('UnifiedML', remote_path + '/UnifiedML/__init__.py')
+UnifiedML = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(UnifiedML)
 
 def getattr_recursive(__o, name):
     for key in name.split('.'):
