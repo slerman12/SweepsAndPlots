@@ -14,7 +14,8 @@ runs.sweep = [
     +'dataset.train_eval_splits=[1, 0.5]'
     parallel=true
     num_gpus=8
-    mem=160""",
+    mem=160
+    reservation_id=20230321""",
 ]
 
 runs.plots = [
