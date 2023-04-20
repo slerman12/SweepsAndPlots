@@ -50,7 +50,7 @@ shutil.copytree(remote_path + '/UnifiedML/Hyperparams/', path + '/Hyperparams/',
 if 'task' in sys_args:
     task = [arg.split('=')[1] for arg in sys.argv if 'task' in arg][0]
     for line in fileinput.input(os.path.dirname(__file__) + '/sbatch.yaml', inplace=True):
-        if line == '  - task@_global_: atari/pong':
+        if 'task@_global_: atari/pong' in line:
             line = line.replace('atari/pong', task)
         sys.stdout.write(line)
 
