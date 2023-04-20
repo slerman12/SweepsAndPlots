@@ -73,8 +73,8 @@ def getattr_recursive(__o, name):
 def main(args):
     Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
 
-    if 'task' in sys_args:
-        args.task = [arg.split('=')[1] for arg in sys.argv if arg.split('=')[0] == 'task'][0]
+    task = [arg.split('=')[1] for arg in sys.argv if arg.split('=')[0] == 'task'][0] if 'task' in sys_args else None
+    # if 'task' in sys_args:
         # args.task = args.task.lower()
 
         # if 'task=classify/custom' in sys.argv[1:]:
@@ -105,7 +105,7 @@ def main(args):
 {cuda}
 {'module load gcc' if 'bluehive' in remote_name else ''}
 wandb login {wandb_login_key}
-python {path}/{run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
+python {path}/{run} {'' if task is None else f'task={task}'} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
 
     # Write script
