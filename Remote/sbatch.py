@@ -47,12 +47,13 @@ OmegaConf.register_new_resolver("not", lambda bool: not bool)
 # Copy UnifiedML Hyperparams to any derivative apps
 shutil.copytree(remote_path + '/UnifiedML/Hyperparams/', path + '/Hyperparams/', dirs_exist_ok=True)
 
-if 'task' in sys_args:
-    task = [arg.split('=')[1] for arg in sys.argv if 'task' in arg][0]
-    for line in fileinput.input(os.path.dirname(__file__) + '/sbatch.yaml', inplace=True):
-        if 'task@_global_: atari/pong' in line:
-            line = line.replace('atari/pong', task)
-        sys.stdout.write(line)
+# Import app-specific task
+# if 'task' in sys_args:
+#     task = [arg.split('=')[1] for arg in sys.argv if 'task' in arg][0]
+#     for line in fileinput.input(os.path.dirname(__file__) + '/sbatch.yaml', inplace=True):
+#         if 'task@_global_: atari/pong' in line:
+#             line = line.replace('atari/pong', task)
+#         sys.stdout.write(line)
 
 
 def getattr_recursive(__o, name):
