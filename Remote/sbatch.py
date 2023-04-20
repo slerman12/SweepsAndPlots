@@ -43,7 +43,8 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
 # Import UnifiedML path
-importlib.util.module_from_spec(importlib.util.spec_from_file_location('UnifiedML', remote_path + '/UnifiedML/Run.py'))
+importlib.util.module_from_spec(importlib.util.spec_from_file_location('UnifiedML',
+                                                                       remote_path + '/UnifiedML/__init__.py'))
 
 
 def getattr_recursive(__o, name):
