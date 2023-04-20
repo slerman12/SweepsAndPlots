@@ -42,10 +42,8 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 # A boolean "not" operation for config
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
-# Import UnifiedML path
-spec = importlib.util.spec_from_file_location('UnifiedML', remote_path + '/UnifiedML/__init__.py')
-UnifiedML = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(UnifiedML)
+# Add UnifiedML args to Hydra's search path
+sys.argv.extend(['-cd', remote_path + '/UnifiedML/Hyperparams'])
 
 def getattr_recursive(__o, name):
     for key in name.split('.'):
