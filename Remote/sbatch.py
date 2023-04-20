@@ -13,7 +13,7 @@ from omegaconf import OmegaConf
 
 
 username = 'slerman'
-remote_name = 'bluehive_cxu'  # TODO This can be a sysarg. Just extract it manually.
+remote_name = 'bluehive_acmml'  # TODO This can be a sysarg. Just extract it manually.
 app = 'XRDs'
 run = 'XRD.py'
 
@@ -85,7 +85,8 @@ def main(args):
     script = f"""#!/bin/bash
 #SBATCH -c {args.num_workers + 1}
 {f'#SBATCH -p gpu --gres=gpu:{args.num_gpus}' if args.num_gpus else ''}
-{'#SBATCH -p csxu -A cxu22_lab' if remote_name == 'bluehive_cxu' else ''}
+{'#SBATCH -p csxu -A cxu22_lab' if remote_name == 'bluehive_cxu' 
+    else '#SBATCH -p acmml' if remote_name == 'bluehive_acmml' else ''}
 {f'#SBATCH -p reserved --reservation={username}-{args.reservation_id}' if args.reservation_id else ''}
 #SBATCH -t {args.time} -o {args.logger.path}{args.task_name}_{args.seed}.log -J {args.pseudonym}
 #SBATCH --mem={args.mem}gb 
