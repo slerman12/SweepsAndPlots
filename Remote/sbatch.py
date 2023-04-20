@@ -29,6 +29,11 @@ wandb_login_key = '55c12bece18d43a51c2fcbcb5b7203c395f9bc40'
 
 sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
 meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
+
+for i, arg in enumerate(sys.argv[1:]):
+    if arg.split('=')[0] not in meta and arg[0] != '+':
+        sys.argv[i + 1] = '++' + arg
+print(sys.argv)
 sys.argv.extend(['-cd', path + '/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
 
 # Format path names
@@ -40,11 +45,6 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 
 # A boolean "not" operation for config
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
-
-for i, arg in enumerate(sys.argv[1:]):
-    if arg.split('=')[0] not in meta:
-        sys.argv[i + 1] = '++' + arg
-print(sys.argv)
 
 
 def getattr_recursive(__o, name):
