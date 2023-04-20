@@ -2,6 +2,7 @@
 #
 # This source code is licensed under the MIT license found in the
 # MIT_LICENSE file in the root directory of this source tree.
+import os
 import shutil
 import subprocess
 import sys
@@ -43,7 +44,8 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
 # Copy UnifiedML Hyperparams to any derivative apps
-shutil.copytree(remote_path + '/UnifiedML/Hyperparams/task', path + '/Hyperparams/task')
+for file in os.listdir(remote_path + '/UnifiedML/Hyperparams/task/'):
+    shutil.copy2(remote_path + '/UnifiedML/Hyperparams/task/' + file, path + '/Hyperparams/task/')
 
 
 def getattr_recursive(__o, name):
