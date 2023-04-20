@@ -45,6 +45,8 @@ for i, arg in enumerate(sys.argv[1:]):
     if arg.split('=')[0] in meta - {'-m'}:
         sys.argv[i + 1] = '+' + arg
 
+sys.argv.extend(['-cd', remote_path + '/' + app + '/Hyperparams'])
+
 
 def getattr_recursive(__o, name):
     for key in name.split('.'):
