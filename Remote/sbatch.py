@@ -44,8 +44,7 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
 # Copy UnifiedML Hyperparams to any derivative apps
-for file in os.listdir(remote_path + '/UnifiedML/Hyperparams/task/'):
-    shutil.copy2(remote_path + '/UnifiedML/Hyperparams/task/' + file, path + '/Hyperparams/task/')
+shutil.copytree(remote_path + '/UnifiedML/Hyperparams/task/', path + '/Hyperparams/task/', dirs_exist_ok=True)
 
 
 def getattr_recursive(__o, name):
