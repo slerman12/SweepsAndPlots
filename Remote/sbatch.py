@@ -2,6 +2,7 @@
 #
 # This source code is licensed under the MIT license found in the
 # MIT_LICENSE file in the root directory of this source tree.
+import importlib
 import subprocess
 import sys
 from pathlib import Path
@@ -15,8 +16,8 @@ remote_name = 'bluehive_cxu'  # TODO This can be a sysarg. Just extract it manua
 app = 'XRDs'
 run = 'XRD.py'
 
-path = f'/scratch/{username}/{app}' if 'bluehive' in remote_name \
-    else f'/cxu-serve/u1/{username}/{app}'
+remote_path = f'/scratch/{username}' if 'bluehive' in remote_name else f'/cxu-serve/u1/{username}'
+path = f'{remote_path}/{app}'
 conda_activate = f'source /home/{username}/miniconda3/bin/activate' if 'bluehive' in remote_name \
     else 'conda activate'
 conda = ''.join([f'*"{gpu}"*)\n{conda_activate} {env}\n;;\n'
@@ -40,6 +41,9 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 
 # A boolean "not" operation for config
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
+
+# Import UnifiedML paths
+importlib.import_module(remote_path + '/UnifiedML')
 
 
 def getattr_recursive(__o, name):
