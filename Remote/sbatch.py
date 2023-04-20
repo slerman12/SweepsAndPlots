@@ -60,12 +60,12 @@ def getattr_recursive(__o, name):
 @hydra.main(config_path=f'{remote_path}/{app}/Hyperparams', config_name='args')
 def main(args):
     Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
-    print(args.RL)
-    if 'task' in sys_args:
-        args.task = args.task.lower()
 
-        if 'task=classify/custom' in sys.argv[1:]:
-            args.task = 'classify/custom'
+    if 'task' in sys_args:
+        # args.task = args.task.lower()
+
+        # if 'task=classify/custom' in sys.argv[1:]:
+        #     args.task = 'classify/custom'
 
         if 'task=supermario/mario' in sys.argv[1:]:
             args.task = 'mario'  # Careful, custom suites/tasks might break
