@@ -45,7 +45,7 @@ for i, arg in enumerate(sys.argv[1:]):
     if arg.split('=')[0] in meta - {'-m'}:
         sys.argv[i + 1] = '+' + arg
 
-sys.argv.extend(['-cd', remote_path + '/' + app + '/Hyperparams'])
+sys.argv.extend(['-cd', remote_path + '/UnifiedML/Hyperparams'])
 
 
 def getattr_recursive(__o, name):
@@ -58,7 +58,7 @@ def getattr_recursive(__o, name):
     return __o
 
 
-@hydra.main(config_path=f'{remote_path}/UnifiedML/Hyperparams', config_name='args')
+@hydra.main(config_path=f'{remote_path}/{app}/Hyperparams', config_name='args')
 def main(args):
     Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
 
