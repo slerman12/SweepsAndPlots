@@ -60,6 +60,7 @@ def getattr_recursive(__o, name):
 @hydra.main(config_path=remote_path + '/UnifiedML/Hyperparams', config_name='args')
 def main(args):
     Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
+    print(args)
 
     if 'task' in sys_args:
         args.task = args.task.lower()
