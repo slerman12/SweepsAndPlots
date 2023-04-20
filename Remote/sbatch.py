@@ -73,7 +73,8 @@ def getattr_recursive(__o, name):
 def main(args):
     Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
 
-    # if 'task' in sys_args:
+    if 'task' in sys_args:
+        args.task = [arg.split('=')[1] for arg in sys.argv if arg.split('=')[0] == 'task'][0]
         # args.task = args.task.lower()
 
         # if 'task=classify/custom' in sys.argv[1:]:
