@@ -42,10 +42,8 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
 for i, arg in enumerate(sys.argv[1:]):
-    if arg.split('=')[0] in meta - {'-m'}:
-        sys.argv[i + 1] = '+' + arg
-
-sys.argv.extend(['-cd', remote_path + '/UnifiedML/Hyperparams'])
+    if arg.split('=')[0] not in meta - {'-m'}:
+        sys.argv[i + 1] = '++' + arg
 
 
 def getattr_recursive(__o, name):
@@ -58,7 +56,7 @@ def getattr_recursive(__o, name):
     return __o
 
 
-@hydra.main(config_path=f'{remote_path}/{app}/Hyperparams')
+@hydra.main(config_path='./', config_name='sbatch')
 def main(args):
     Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
 
