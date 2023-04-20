@@ -42,7 +42,7 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
 # Add UnifiedML args to Hydra's search path
-sys.path.append(remote_path + '/UnifiedML/Hyperparams')
+sys.argv.extend(['-cd', remote_path + '/UnifiedML/Hyperparams'])
 
 
 def getattr_recursive(__o, name):
