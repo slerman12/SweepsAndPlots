@@ -28,10 +28,10 @@ wandb_login_key = '55c12bece18d43a51c2fcbcb5b7203c395f9bc40'
 
 sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
 defaults = {'num_gpus': 1,
-            'gpu': 'K80|V100|A100|RTX',
+            'gpu': "'K80|V100|A100|RTX'",
             'mem': 20,
             'time': '3-00:00:00',
-            'reservation_id': None,
+            'reservation_id': 'null',
             # Can change as needed here, but interpolation doesn't seem to work via command line
             'pseudonym': '${task_name}',
             'remote_name': 'bluehive'}
