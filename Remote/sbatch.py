@@ -42,8 +42,6 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 # A boolean "not" operation for config
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
-# Add UnifiedML args to Hydra's search path
-sys.argv.extend(['-cd', remote_path + '/UnifiedML/Hyperparams'])
 
 def getattr_recursive(__o, name):
     for key in name.split('.'):
@@ -90,7 +88,7 @@ def main(args):
 {cuda}
 {'module load gcc' if 'bluehive' in remote_name else ''}
 wandb login {wandb_login_key}
-python {path}/{run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
+python {path}/{run} -cd {remote_path}/UnifiedML/Hyperparams {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
 
     # Write script
