@@ -64,7 +64,8 @@ def main(args):
     if 'task' in sys_args:
         args.task = args.task.lower()
 
-        if 'task=classify/custom' in sys.argv[1:]:
+        classify_tasks = [Path(file).stem for file in os.listdir(path + '/Hyperparams/task/classify/')]
+        if 'classify' in args.task and args.task.split('/')[1] not in classify_tasks:
             args.task = 'classify/custom'
 
         if 'task=supermario/mario' in sys.argv[1:]:
