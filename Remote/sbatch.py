@@ -41,8 +41,9 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 # A boolean "not" operation for config
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
-# Add UnifiedML args to Hydra's search path
-sys.path.append(f'{remote_path}/UnifiedML/Hyperparams/task')
+for i, arg in enumerate(sys.argv[1:]):
+    if arg.split('=') in meta:
+        sys.argv[i + 1] = '+' + arg
 
 
 def getattr_recursive(__o, name):
@@ -55,7 +56,7 @@ def getattr_recursive(__o, name):
     return __o
 
 
-@hydra.main(config_path='./', config_name='sbatch')
+@hydra.main(config_path=f'{remote_path}/UnifiedML/Hyperparams', config_name='args')
 def main(args):
     Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
 
