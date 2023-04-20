@@ -26,13 +26,25 @@ cuda = f'GPU_TYPE' \
 # cuda = f'source /home/{username}/miniconda3/bin/activate AGI'  # One Conda env for any GPU
 wandb_login_key = '55c12bece18d43a51c2fcbcb5b7203c395f9bc40'
 
-
 sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
-meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
+defaults = {'num_gpus': 1,
+            'gpu': 'K80|V100|A100|RTX',
+            'mem': 20,
+            'time': '3-00:00:00',
+            'reservation_id': None,
+            # Can change as needed here, but interpolation doesn't seem to work via command line
+            'pseudonym': '${task_name}',
+            'remote_name': 'bluehive'}
+
+for default, value in defaults.items():
+    if default not in sys_args:
+        sys.argv.append(f'{default}={value}')
 
 for i, arg in enumerate(sys.argv[1:]):
-    if arg.split('=')[0] in meta - {'-m'}:
+    if arg.split('=')[0] in defaults.keys():
         sys.argv[i + 1] = '+' + arg
+
+meta = defaults.keys() | {'-m'}
 
 sys.argv.extend(['-cd', remote_path + '/UnifiedML/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
 
@@ -61,14 +73,14 @@ def getattr_recursive(__o, name):
 def main(args):
     Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
 
-    if 'task' in sys_args:
+    # if 'task' in sys_args:
         # args.task = args.task.lower()
 
         # if 'task=classify/custom' in sys.argv[1:]:
         #     args.task = 'classify/custom'
 
-        if 'task=supermario/mario' in sys.argv[1:]:
-            args.task = 'mario'  # Careful, custom suites/tasks might break
+        # if 'task=supermario/mario' in sys.argv[1:]:
+        #     args.task = 'mario'  # Careful, custom suites/tasks might break
 
     if 'transform' in sys_args:
         args.transform = f'"{args.transform}"'.replace("'", '')
