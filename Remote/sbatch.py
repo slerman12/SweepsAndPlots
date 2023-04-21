@@ -70,8 +70,8 @@ def main(args):
     Path(path + '/' + args.logger.path).mkdir(parents=True, exist_ok=True)
 
     if 'task' in sys_args:
-        # args.task = args.task.lower()
-        #
+        args.task = args.task.lower()
+
         # classify_tasks = [Path(file).stem for file in os.listdir(path + '/Hyperparams/task/classify/')]
         # if 'classify' in args.task and args.task.split('/')[1] not in classify_tasks:
         #     args.task = [arg.split('=')[1] for arg in sys.argv if 'task' in arg][0]
@@ -81,7 +81,6 @@ def main(args):
 
         # In case "suite/task_name" doesn't describe task
         tasks = [arg.split('=')[1] for arg in sys.argv if 'task' in arg][0]
-        print(args.task, tasks)
         if args.task not in tasks:
             args.task = tasks  # Can break if multiple comma-separated tasks
 
