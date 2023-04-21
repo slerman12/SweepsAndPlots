@@ -14,7 +14,7 @@ runs.sweep = [
     +'dataset.train_eval_splits=[1, 0.5]'
     stream=false
     num_gpus=1
-    mem=200
+    mem=50
     reservation_id=20230321""",
 ]
 
