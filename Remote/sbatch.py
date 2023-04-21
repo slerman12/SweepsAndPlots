@@ -42,7 +42,7 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 # A boolean "not" operation for config
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
-# Copy UnifiedML Hyperparams to any derivative apps
+# Copy UnifiedML Hyperparams to any derivative apps  TODO Just add 'hydra.searchpath=[pkg://additional_conf]' to sys arg
 if app != 'UnifiedML':
     shutil.copytree(remote_path + '/UnifiedML/Hyperparams/', path + '/Hyperparams/', dirs_exist_ok=True)
 
