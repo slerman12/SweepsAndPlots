@@ -35,7 +35,6 @@ runs.sweep = [
     experiment=Atari26-Test
     mem=50
     autocast=true
-    reservation_id=20230321
     """,  # Note: Manually set "pseudonym" to task_name in sbatch.yaml. Autocast throws error
     # Traceback (most recent call last):
     # File "/scratch/slerman/UnifiedML/Run.py", line 85, in main

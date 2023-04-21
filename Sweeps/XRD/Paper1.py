@@ -14,8 +14,8 @@ runs.sweep = [
     +'dataset.train_eval_splits=[1, 0.5]'
     stream=false
     num_gpus=1
-    mem=100
-    remote_name=bluehive_csxu""",
+    mem=200
+    reservation_id=20230321""",
 ]
 
 runs.plots = [
