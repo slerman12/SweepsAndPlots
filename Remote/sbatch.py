@@ -43,7 +43,8 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
 # Copy UnifiedML Hyperparams to any derivative apps
-shutil.copytree(remote_path + '/UnifiedML/Hyperparams/', path + '/Hyperparams/', dirs_exist_ok=True)
+if app != 'UnifiedML':
+    shutil.copytree(remote_path + '/UnifiedML/Hyperparams/', path + '/Hyperparams/', dirs_exist_ok=True)
 
 # Import app-specific task
 # if 'task' in sys_args:
