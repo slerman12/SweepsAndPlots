@@ -32,10 +32,10 @@ runs.sweep = [
     save_per_steps=200000
     replay.save=true
     'stddev_schedule="linear(1.0,0.1,20000)"'
-    Policy=Agents.DDPG.DDPGPolicy
     experiment=Atari26-LessExplore
     mem=50
     autocast=true
+    reservation_id=20230321
     """,  # Note: Manually set "pseudonym" to task_name in sbatch.yaml. Autocast throws error
     # Traceback (most recent call last):
     # File "/scratch/slerman/UnifiedML/Run.py", line 85, in main
