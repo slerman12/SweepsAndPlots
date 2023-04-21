@@ -46,14 +46,6 @@ OmegaConf.register_new_resolver("not", lambda bool: not bool)
 if app != 'UnifiedML':
     shutil.copytree(remote_path + '/UnifiedML/Hyperparams/', path + '/Hyperparams/', dirs_exist_ok=True)
 
-# Import app-specific task
-# if 'task' in sys_args:
-#     task = [arg.split('=')[1] for arg in sys.argv if 'task' in arg][0]
-#     for line in fileinput.input(os.path.dirname(__file__) + '/sbatch.yaml', inplace=True):
-#         if 'task@_global_: atari/pong' in line:
-#             line = line.replace('atari/pong', task)
-#         sys.stdout.write(line)
-
 
 def getattr_recursive(__o, name):
     for key in name.split('.'):
@@ -71,10 +63,6 @@ def main(args):
 
     if 'task' in sys_args:
         args.task = args.task.lower()
-
-        # classify_tasks = [Path(file).stem for file in os.listdir(path + '/Hyperparams/task/classify/')]
-        # if 'classify' in args.task and args.task.split('/')[1] not in classify_tasks:
-        #     args.task = [arg.split('=')[1] for arg in sys.argv if 'task' in arg][0]
 
         # if 'task=supermario/mario' in sys.argv[1:]:
         #     args.task = 'mario'  # Careful, custom suites/tasks might break
