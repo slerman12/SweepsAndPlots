@@ -13,11 +13,7 @@ runs.sweep = [
     +'dataset.roots=["/gpfs/fs2/scratch/public/jsalgad2/icsd1.2m_large/","/scratch/slerman/XRDs_backup/icsd_Datasets/rruff/XY_DIF_noiseAll/"]'
     +'dataset.train_eval_splits=[1, 0.5]'
     stream=false
-    num_gpus=4
-    num_workers=1
-    parallel=true
-    mem=30
-    reservation_id=20230321""",
+    mem=50""",
 ]
 
 runs.plots = [
