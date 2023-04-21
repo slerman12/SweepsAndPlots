@@ -79,7 +79,10 @@ def main(args):
         # if 'task=supermario/mario' in sys.argv[1:]:
         #     args.task = 'mario'  # Careful, custom suites/tasks might break
 
-        args.task = [arg.split('=')[1] for arg in sys.argv if 'task' in arg][0]
+        # In case suite/task_name doesn't describe task
+        tasks = [arg.split('=')[1] for arg in sys.argv if 'task' in arg][0]
+        if args.task not in tasks:
+            args.task = tasks  # Can break if multiple comma-separated tasks
 
     if 'transform' in sys_args:
         args.transform = f'"{args.transform}"'.replace("'", '')
