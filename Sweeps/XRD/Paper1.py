@@ -15,7 +15,7 @@ runs.sweep = [
     stream=false
     num_gpus=1
     mem=100
-    reservation_id=20230321""",
+    remote_name=bluehive_csxu""",
 ]
 
 runs.plots = [
