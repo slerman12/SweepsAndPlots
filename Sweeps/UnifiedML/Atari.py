@@ -27,8 +27,7 @@ runs.sweep = [
     # """,  # Note: Manually set "pseudonym" to task_name in sbatch.yaml
     # Less Exploration
     f"""
-    task=atari/privateeye,atari/roadrunner
-    Agent=Agents.HardDQNAgent
+    task={join(atari)}
     train_steps=1000000
     save_per_steps=200000
     replay.save=true
