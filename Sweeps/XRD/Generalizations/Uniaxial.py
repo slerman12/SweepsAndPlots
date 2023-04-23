@@ -7,7 +7,7 @@ runs.sweep = [
     # Large + RRUFF, No-Pool-CNN
     """task=npcnn
     experiment=090,095,099
-    num_classes=7,230
+    num_classes=230
     task_name='${num_classes}-Way_ICSD-true_Open-Access-false_RRUFF-true_Soup-true'
     load=true
     load_path='/scratch/slerman/XRDs/Checkpoints/NPCNN/AC2Agent/classify/${task_name}_1.pt'
