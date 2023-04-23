@@ -13,13 +13,13 @@ from omegaconf import OmegaConf
 
 username = 'slerman'
 remote_name = 'bluehive'  # TODO This can be a sysarg. Just extract it manually.
-app = 'XRDs'
-run = 'XRD.py'
+app = 'UnifiedML'
+run = 'Run.py'
 
 remote_path = f'/scratch/{username}' if 'bluehive' in remote_name else f'/cxu-serve/u1/{username}'
 path = f'{remote_path}/{app}'
 conda_activate = f'source /home/{username}/miniconda3/bin/activate' if 'bluehive' in remote_name \
-    else 'conda activate'
+    else 'conda activate'  # TODO Maybe conda activate works for both, and can move below conda_envs list to top
 conda = ''.join([f'*"{gpu}"*)\n{conda_activate} {env}\n;;\n'
                  for gpu, env in [('K80', 'CUDA10.2'), ('', 'AGI')]])  # Conda envs w.r.t. GPU, '' means else
 cuda = f'GPU_TYPE' \
@@ -87,7 +87,7 @@ def main(args):
 #SBATCH -c {args.num_workers + 1}
 {f'#SBATCH -p gpu --gres=gpu:{args.num_gpus}' if args.num_gpus else ''}
 {'#SBATCH -p csxu -A cxu22_lab' if remote_name == 'bluehive_csxu' 
-    else '#SBATCH -p acmml -A cxu22_lab' if remote_name == 'bluehive_acmml' else ''}
+    else f'#SBATCH -p acmml -A {username}' if remote_name == 'bluehive_acmml' else ''}
 {f'#SBATCH -p reserved --reservation={username}-{args.reservation_id}' if args.reservation_id else ''}
 #SBATCH -t {args.time} -o {args.logger.path}{args.task_name}_{args.seed}.log -J {args.pseudonym}
 #SBATCH --mem={args.mem}gb 

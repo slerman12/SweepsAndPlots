@@ -27,12 +27,13 @@ runs.sweep = [
     # """,  # Note: Manually set "pseudonym" to task_name in sbatch.yaml
     # Less Exploration
     f"""
-    task={join(atari)}
+    task=atari/privateeye,atari/roadrunner
+    Agent=Agents.HardDQNAgent
     train_steps=1000000
     save_per_steps=200000
     replay.save=true
     'stddev_schedule="linear(1.0,0.1,20000)"'
-    experiment=Atari26-Test
+    experiment=Atari26-LessExplore
     mem=50
     autocast=true
     """,  # Note: Manually set "pseudonym" to task_name in sbatch.yaml. Autocast throws error
