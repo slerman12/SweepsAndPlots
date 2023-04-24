@@ -12,7 +12,7 @@ from omegaconf import OmegaConf
 
 
 username = 'slerman'
-remote_name = 'bluehive_acmml'  # TODO This can be a sysarg. Just extract it manually.
+remote_name = 'bluehive_csxu'  # TODO This can be a sysarg. Just extract it manually.
 app = 'XRDs'
 run = 'XRD.py'
 
