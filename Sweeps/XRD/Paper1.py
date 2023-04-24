@@ -15,8 +15,7 @@ runs.sweep = [
     stream=false
     num_workers=6
     num_gpus=1
-    mem=80
-    remote_name=bluehive_acmml""",
+    mem=80""",
 ]
 
 runs.plots = [
