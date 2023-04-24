@@ -14,7 +14,7 @@ from VPN import get_pass, connect_vpn, username
 
 
 app = 'XRDs'
-sweep_path = 'XRD/Paper1'
+sweep_path = 'XRD/Generalizations/Uniaxial'
 UnifiedML_local_path = '../UnifiedML'
 
 

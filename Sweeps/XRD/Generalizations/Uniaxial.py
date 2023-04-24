@@ -10,7 +10,6 @@ runs.sweep = [
     experiment={experiment}
     num_classes=7,230
     load=true
-    load_path='/scratch/slerman/XRDs/Checkpoints/NPCNN/AC2Agent/classify/${{task_name}}_1.pt'
     task_name='${{num_classes}}-Way_ICSD-true_Open-Access-false_RRUFF-true_Soup-true'
     +'dataset.roots=["/gpfs/fs2/scratch/public/jsalgad2/icsd1.2m_large/","/scratch/slerman/XRDs_backup/icsd_Datasets/rruff/XY_DIF_noiseAll/"]'
     +'dataset.train_eval_splits=[1, 0.5]'
@@ -20,20 +19,10 @@ runs.sweep = [
     +'test_dataset.num_classes=${{num_classes}}'
     mem=80
     reservation_id=20230321""" for experiment in ['090', '095', '099']
-]  # Note: load_path and task_name might be redundant. Heck, even TestDataset and test_dataset
+]
+# Note: I think test_dataset is only needed because it tries to load a training dataset TODO
+# The task_name is only needed here because I mistakenly trained with lowercase booleans
 
-runs.sweep = [
-    # Large + RRUFF, No-Pool-CNN
-    f"""task=npcnn
-    train_steps=0
-    experiment={experiment}
-    num_classes=7,230
-    load=true
-    +'dataset.roots=["/gpfs/fs2/scratch/public/jsalgad2/Uniaxial/{experiment}/"]'
-    +'dataset.train_eval_splits=[0]'
-    mem=80
-    reservation_id=20230321""" for experiment in ['090', '095', '099']
-]  # Try this
 
 runs.plots = [
     ['090', '095', '099'],

@@ -8,9 +8,9 @@ from pexpect import pxssh
 
 from VPN import get_pass, connect_vpn, username
 
-sweep_path = 'XRD/Generalizations/Uniaxial'  # TODO Central
+sweep_path = 'XRD/Paper1'  # TODO Central
 branch = 'Dev'  # TODO runs
-remote_name = 'bluehive'  # TODO All of these should be pulled from the Sweeps file specified via sysarg or central
+remote_name = 'bluehive_acmml'  # TODO All of these should be pulled from the Sweeps file specified via sysarg or central
 app = 'XRDs'  # TODO runs
 
 # TODO Central

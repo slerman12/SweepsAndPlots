@@ -7,7 +7,7 @@ runs.sweep = [
     # Large + RRUFF, No-Pool-CNN
     """task=npcnn
     task_name='${num_classes}-Way_ICSD-true_Open-Access-false_RRUFF-true_Soup-true'
-    num_classes=7,230
+    num_classes=7
     train_steps=5e5
     save_per_steps=1e5
     +'dataset.roots=["/gpfs/fs2/scratch/public/jsalgad2/icsd1.2m_large/","/scratch/slerman/XRDs_backup/icsd_Datasets/rruff/XY_DIF_noiseAll/"]'
@@ -16,7 +16,7 @@ runs.sweep = [
     num_workers=6
     num_gpus=1
     mem=80
-    reservation_id=20230321""",
+    remote_name=bluehive_acmml""",
 ]
 
 runs.plots = [
