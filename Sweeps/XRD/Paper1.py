@@ -15,7 +15,8 @@ runs.sweep = [
     stream=false
     num_workers=6
     num_gpus=1
-    mem=80""",
+    mem=80
+    reservation_id=20230321""",
 ]
 
 runs.plots = [
