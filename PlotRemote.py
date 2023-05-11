@@ -24,7 +24,7 @@ Example of how to plot independent from any specified run specs:
     runs.update(dict(plots=[['Exp']], sftp=False))
 """
 runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().runs
-plot_group = sweep_path.split('/')[0]
+plot_group = '/'.join(sweep_path.split('/')[:-1])
 # plot_group = 'Independent'
 # runs.update(dict(plots=[['Exp']], sftp=False))
 
