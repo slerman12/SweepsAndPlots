@@ -4,7 +4,7 @@ A library for managing [UnifiedML](github.com/agi-init/UnifiedML) apps on remote
 
 ## Setup
 
-5 steps: most of them involve getting this repo under your GitHub account.
+5 steps: most of them involve just getting this repo under your GitHub account.
 
 **Step 1.** Make this repo into a personal GitHub repo under your GitHub account.
 
