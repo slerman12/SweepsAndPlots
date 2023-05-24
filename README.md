@@ -11,7 +11,6 @@ Most of them involve just getting this repo under your GitHub account.
 **Step 2.** Clone a copy of it (your version) on your local machine and remote machines.
 
 **Step 3.** Make sure your local and remote machines both have [UnifiedML](github.com/agi-init/UnifiedML) cloned with corresponding UnifiedML-installed [conda]() environments that can be activated.
-* Anywhere outside of this repo
 
 **Step 4.** Make sure both your local and remote machines have ssh keys registered with GitHub such that push/pulls can be done without needing password authentication. See GitHub's ssh-key-generating [docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) for step-by-step instructions on how to do this. This is necessary so that your version of this repo can stay automatically synced across your local and remote clones.
 * Or make your version public
