@@ -23,5 +23,5 @@ runs.plots = [
 
 runs.app = 'XRDs'
 runs.branch = 'main'
-runs.remote_name = 'bluehive_acmml'
+runs.remote_name = 'bluehive_csxu'
 runs.title = 'Disjoint 50% RRUFF - NPCNN - Trained on synthetic + 50% RRUFF'
