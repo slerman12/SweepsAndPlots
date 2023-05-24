@@ -21,14 +21,20 @@ runs.sweep = [
     mem=80
     reservation_id=20230321""" for experiment in ['090', '095', '099']
 ]
-# Note: I think test_dataset is only needed because it tries to load a training dataset TODO
+# Note: I think test_dataset is only needed because it tries to load a training dataset TODO - if train=false
+#                                                                                           or eval=true
 # The task_name is only needed here because I mistakenly trained with lowercase booleans
+# Can use test_dataset and not dataset? When test dataset present, create separate Test benchmarking dir?
+# test_name can substitutes task_name in benchmarking csv, otherwise :format{TestDataset} or :format{TestEnv}?
+# Datasets should support not just pytorch datasets but arbitrary iterables like a numpy array or datapoint
+# __init__ should have a load_agent method for calling act() with manually - can pass in nothing, experiment, task_name,
+# or just a path to a checkpoint
+# Just like detach should be an option, so should making parts of agents not savable (loaded from scratch upon load)
 
 
 runs.plots = [
     ['090', '095', '099'],
 ]
 
+runs.remote_name = 'bluehive_acmml'
 runs.title = 'Uniaxial - NPCNN - Trained on synthetic + 50% RRUFF'
-runs.sftp = True
-runs.lab = False

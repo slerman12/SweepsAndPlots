@@ -10,31 +10,18 @@ from pexpect import spawn
 
 import numpy as np
 
-from VPN import get_pass, connect_vpn, username
+from Central import UnifiedML_local_path, sweep_path, get_remote
 
 
-app = 'XRDs'
-sweep_path = 'XRD/Generalizations/Uniaxial'
-UnifiedML_local_path = '../UnifiedML'
-
-
-"""
-Example of how to plot independent from any specified run specs:
-    plot_group = 'Independent'
-    runs.update(dict(plots=[['Exp']], sftp=False))
-"""
 runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().runs
-plot_group = '/'.join(sweep_path.split('/')[:-1])
-# plot_group = 'Independent'
-# runs.update(dict(plots=[['Exp']], sftp=False))
+name = '/'.join(sweep_path.split('/')[:-1])
 
+_, username, password, vpn, remote_app_paths, _, _ = get_remote(runs.remote_name)
 
-# SFTP experiment results
+vpn()
+
+# TODO Generalize
 if runs.sftp:
-    if runs.bluehive:
-        password = get_pass()
-        connect_vpn()
-
     cwd = os.getcwd()
     local_path = f"./Benchmarking"
 
@@ -43,7 +30,7 @@ if runs.sftp:
 
     experiments = set().union(*runs.plots)
 
-    if runs.bluehive:
+    if 'bluehive' in runs.remote_name:
         # SFTP
         print(f'SFTP\'ing: {", ".join(experiments)}')
         if len(runs.tasks):
@@ -59,7 +46,7 @@ if runs.sftp:
         print('- Connected! ✓\n')
         p.sendline(f"lcd {local_path}")
         p.expect('sftp> ', timeout=None)
-        p.sendline(f"cd /scratch/{username}/{app}")
+        p.sendline(f"cd {remote_app_paths[runs.remote_name][runs.app]}")
         p.expect('sftp> ', timeout=None)
         for i, experiment in enumerate(experiments):
             print(f'{i + 1}/{len(experiments)} [bluehive] SFTP\'ing "{experiment}"')
@@ -67,7 +54,7 @@ if runs.sftp:
             p.expect('sftp> ', timeout=None)
         print()
 
-    if runs.lab:
+    if runs.remote_name == 'iris/retina':
         print('Connecting to lab', end=" ")
         p = spawn(f'sftp macula')
         p.expect('sftp> ')
@@ -77,7 +64,7 @@ if runs.sftp:
         # SFTP can't access ~/, so need full path
         lab_paths = ['/localdisk2/sam', '/home/vax10/u38/slerman', '/cxu-serve/u1/slerman']
         for i, path in enumerate(lab_paths):  # Note: latest one overrides
-            p.sendline(f'cd {path}/{app}')
+            p.sendline(f'cd {remote_app_paths[runs.remote_name][runs.app]}')
             p.expect('sftp> ')
             for j, experiment in enumerate(experiments):
                 if experiment not in runs.bluehive_only:
@@ -93,14 +80,13 @@ if runs.sftp:
 
 plot = SourceFileLoader("Plot", UnifiedML_local_path + '/Plot.py').load_module().plot
 
-# Generate each plot
 for plot_train in [False, True]:
 
     print(f'\n Plotting {"train" if plot_train else "eval"}...')
 
     for plot_experiments in runs.plots:
 
-        plot(path=f"./Benchmarking/{plot_group if plot_group else ''}/{'_'.join(plot_experiments).strip('.')}/Plots/",
+        plot(path=f"./Benchmarking/{name if name else ''}/{'_'.join(plot_experiments).strip('.')}/Plots/",
              plot_experiments=plot_experiments if len(plot_experiments) else None,
              plot_agents=runs.agents if len(runs.agents) else None,
              plot_suites=runs.suites if len(runs.suites) else None,

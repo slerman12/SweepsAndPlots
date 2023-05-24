@@ -54,8 +54,7 @@ runs.plots = [
     ['Atari26-LessExplore']
 ]
 
-runs.sftp = False
-runs.lab = True
+runs.remote_name = 'iris/retina'
 runs.title = 'Atari-26'
 runs.steps = 1e6
 runs.write_tabular = True

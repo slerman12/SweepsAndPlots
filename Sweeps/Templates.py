@@ -22,8 +22,7 @@ def template():
 
         # Plotting-related commands go here
         'sftp': True,
-        'bluehive': True,
-        'lab': True,
+        'remote_name': None,
         'write_tabular': False,
         'steps': None,
         'title': 'UnifiedML',

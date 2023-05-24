@@ -6,27 +6,20 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from importlib.machinery import SourceFileLoader
 
 import hydra
 from omegaconf import OmegaConf
 
+from ..Central import sweep_path, get_remote, remote_app_run_files, wandb_login_key
 
-username = 'slerman'
-remote_name = 'bluehive_acmml'  # TODO This can be a sysarg. Just extract it manually.
-app = 'XRDs'
-run = 'XRD.py'
 
-remote_path = f'/scratch/{username}' if 'bluehive' in remote_name else f'/cxu-serve/u1/{username}'
-path = f'{remote_path}/{app}'
-conda_activate = f'source /home/{username}/miniconda3/bin/activate' if 'bluehive' in remote_name \
-    else 'conda activate'  # TODO Maybe conda activate works for both, and can move below conda_envs list to top
-conda = ''.join([f'*"{gpu}"*)\n{conda_activate} {env}\n;;\n'
-                 for gpu, env in [('K80', 'CUDA10.2'), ('', 'AGI')]])  # Conda envs w.r.t. GPU, '' means else
-cuda = f'GPU_TYPE' \
-       f'=$(nvidia-smi --query-gpu=gpu_name --format=csv | tail  -1)\ncase $GPU_TYPE in\n{conda}esac'
-# cuda = f'source /home/{username}/miniconda3/bin/activate AGI'  # One Conda env for any GPU
-wandb_login_key = '55c12bece18d43a51c2fcbcb5b7203c395f9bc40'
+runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().runs
 
+_, username, _, _, remote_app_paths, conda, sbatch = get_remote(runs.remote_name)
+
+path = remote_app_paths[runs.remote_name][runs.app]
+run = remote_app_run_files[runs.remote_name][runs.app]
 
 sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
 meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
@@ -43,8 +36,8 @@ OmegaConf.register_new_resolver("allow_objects", lambda config: config._set_flag
 OmegaConf.register_new_resolver("not", lambda bool: not bool)
 
 # Copy UnifiedML Hyperparams to any derivative apps  TODO Just add 'hydra.searchpath=[pkg://additional_conf]' to sys arg
-if app != 'UnifiedML':
-    shutil.copytree(remote_path + '/UnifiedML/Hyperparams/', path + '/Hyperparams/', dirs_exist_ok=True)
+if runs.app != 'UnifiedML':
+    shutil.copytree(f'{remote_app_paths["UnifiedML"]}/Hyperparams/', path + '/Hyperparams/', dirs_exist_ok=True)
 
 
 def getattr_recursive(__o, name):
@@ -83,18 +76,20 @@ def main(args):
 
     # gpu = '$GPU_TYPE'  # Can add to python script e.g. experiment='name_{gpu}'
 
+    # Note: specifying GPU type via args.gpu seems to work on Bluehive but not all clusters, leaving it
+    # bluehive-specific for now, but should work in the general case
+    extra = f'#SBATCH -C {args.gpu}' if args.num_gpus and 'bluehive' in runs.remote_name else ''
+
     script = f"""#!/bin/bash
 #SBATCH -c {args.num_workers + 1}
 {f'#SBATCH -p gpu --gres=gpu:{args.num_gpus}' if args.num_gpus else ''}
-{'#SBATCH -p csxu -A cxu22_lab' if remote_name == 'bluehive_csxu' 
-    else f'#SBATCH -p acmml -A cxu22_lab' if remote_name == 'bluehive_acmml' else ''}
 {f'#SBATCH -p reserved --reservation={username}-{args.reservation_id}' if args.reservation_id else ''}
 #SBATCH -t {args.time} -o {args.logger.path}{args.task_name}_{args.seed}.log -J {args.pseudonym}
 #SBATCH --mem={args.mem}gb 
-{f'#SBATCH -C {args.gpu}' if args.num_gpus and 'bluehive' in remote_name else ''}
-{cuda}
-{'module load gcc' if 'bluehive' in remote_name else ''}
-wandb login {wandb_login_key}
+{extra}
+{sbatch if sbatch else ''}
+{conda if conda else ''}
+{"wandb login " + wandb_login_key if wandb_login_key else ''}'
 python {path}/{run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
 

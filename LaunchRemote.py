@@ -6,60 +6,49 @@ from importlib.machinery import SourceFileLoader
 
 from pexpect import pxssh
 
-from VPN import get_pass, connect_vpn, username
+from git import Repo
 
-# testing2
-
-sweep_path = 'XRD/Generalizations/Uniaxial'  # TODO Central
-branch = 'Dev'  # TODO runs
-remote_name = 'bluehive_acmml'  # TODO All of these should be pulled from the Sweeps file specified via sysarg or central
-app = 'XRDs'  # TODO runs
-
-# TODO Central
-if 'iris/retina' in remote_name:
-    server = 'slurm'
-
-    username, password = username, ''
-    remote_path = f'/cxu-serve/u1/{username}'
-    conda = f'conda activate AGI'
-elif 'bluehive' in remote_name:
-    server = 'bluehive.circ.rochester.edu'
-    connect_vpn()
-
-    username, password = username, get_pass()
-    remote_path = f'/scratch/{username}'
-    conda = f'source /home/{username}/miniconda3/bin/activate AGI'
-else:
-    assert False, 'Invalid remote name.'
+from Central import sweep_path, get_remote, github_username
 
 runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().runs
 
+server, username, password, vpn, remote_app_paths, conda, _ = get_remote(runs.remote_name)
+
+vpn()
+
+runs.branch = runs.branch or "master"
+
 # Launch
 try:
+    repo = Repo(f'github.com/{github_username}/SweepsAndPlots')
+    repo.git.add(update=True)
+    repo.index.commit('Launch')
+    origin = repo.remote(name='origin')
+    origin.push()
     s = pxssh.pxssh()
     s.login(server, username, password)
-    s.sendline(f'cd {remote_path}/SweepsAndPlots')
+    s.sendline(f'cd {remote_app_paths["SweepsAndPlots"]}')
     s.prompt()
     print(s.before.decode("utf-8"))
     s.sendline(f'git pull')
     s.prompt()
     print(s.before.decode("utf-8"))
-    s.sendline(f'cd {remote_path}/{app}')  # Run a command
+    s.sendline(f'cd {remote_app_paths[runs.app]}')  # Run a command
     s.prompt()  # Match the prompt
     print(s.before.decode("utf-8"))  # Print everything before the prompt.
     s.sendline(f'git fetch origin')
     s.prompt()
     print(s.before.decode("utf-8"))
-    s.sendline(f'git checkout -b {branch} origin/{branch or "master"}')
+    s.sendline(f'git checkout -b {runs.branch} origin/{runs.branch}')
     s.prompt()
     prompt = s.before.decode("utf-8")
-    if f"fatal: A branch named '{branch}' already exists." in prompt:
-        s.sendline(f'git checkout {branch}')
+    if f"fatal: A branch named '{runs.branch}' already exists." in prompt:
+        s.sendline(f'git checkout {runs.branch}')
         s.prompt()
         prompt = s.before.decode("utf-8")
     print(prompt)
     assert 'error' not in prompt
-    s.sendline(f'git pull origin {branch}')
+    s.sendline(f'git pull origin {runs.branch}')
     s.prompt()
     print(s.before.decode("utf-8"))
     s.sendline(conda)
@@ -68,8 +57,10 @@ try:
     for i, hyperparams in enumerate(runs.sweep):
         hyperparams = "\t".join(hyperparams.splitlines())
         print(f'Set: {i + 1}')
-        print(f'python {remote_path}/SweepsAndPlots/Remote/sbatch.py -m {hyperparams}   remote_name={remote_name}"\n')
-        s.sendline(f'python {remote_path}/SweepsAndPlots/Remote/sbatch.py -m {hyperparams}   remote_name={remote_name}')
+        print(f'python {remote_app_paths["SweepsNPlots"]}/Remote/sbatch.py -m {hyperparams}   '
+              f'remote_name={runs.remote_name}"\n')
+        s.sendline(f'python {remote_app_paths["SweepsNPlots"]}/Remote/sbatch.py -m {hyperparams}   '
+                   f'remote_name={runs.remote_name}')
         s.prompt()
         print(s.before.decode("utf-8"))
     s.logout()
