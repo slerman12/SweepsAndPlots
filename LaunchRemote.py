@@ -8,7 +8,7 @@ from pexpect import pxssh
 
 from git import Repo
 
-from GetPass import get_pass
+from GetSafePass import get_pass
 from Central import sweep_path, get_remote, wandb, github_username
 
 runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().runs

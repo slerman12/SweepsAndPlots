@@ -7,7 +7,7 @@ Selecting sweep, UnifiedML local path, and configurations for remote servers.
 Modify this file with your info.
 """
 
-from GetPass import get_pass
+from GetSafePass import get_pass
 from VPN import connect_vpn
 
 # Example sweep in Sweeps/UnifiedML/Atari.py

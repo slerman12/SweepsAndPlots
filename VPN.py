@@ -4,7 +4,7 @@
 # MIT_LICENSE file in the root directory of this source tree.
 from pexpect import spawn
 
-from GetPass import get_pass
+from GetSafePass import get_pass
 
 
 def connect_vpn(username='slerman'):
