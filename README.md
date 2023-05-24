@@ -14,7 +14,7 @@ Most of them involve just getting this repo under your GitHub account.
 
 **Step 4.** Make sure both your local and remote machines have ssh keys registered with GitHub such that push/pulls can be done without needing password authentication. See GitHub's ssh-key-generating [docs](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) for step-by-step instructions on how to do this. This is necessary so that your version of this repo can stay automatically synced across your local and remote clones.
 
-**Step 5.** On your local machine, modify your [```Central.py```](Central.py) with the correct info/credentials of your remote server(s).
+**Step 5.** On your local machine, modify your [```Central.py```](Central.py) file with the correct info/credentials of your remote server(s).
 
 ## Defining experiment sweeps
 
