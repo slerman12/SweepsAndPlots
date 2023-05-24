@@ -5,7 +5,7 @@ runs = template()
 
 runs.sweep = [
     # Large + RRUFF, No-Pool-CNN
-    """task=NPCNN
+    """task=npcnn
     task_name='${num_classes}-Way_ICSD-True_Open-Access-False_RRUFF-True_Soup-True'
     num_classes=7,230
     train_steps=5e5
