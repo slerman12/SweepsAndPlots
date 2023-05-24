@@ -10,7 +10,7 @@ from GetPass import get_pass
 def connect_vpn(username='slerman'):
     def _connect_vpn():
         try:
-            password = get_pass()
+            password = get_pass('bluehive')
             p = spawn('/opt/cisco/anyconnect/bin/vpn connect vpnconnect.rochester.edu')
             p.expect('Username: ')
             p.sendline('')
