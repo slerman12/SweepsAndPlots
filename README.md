@@ -1,6 +1,6 @@
 # Tributaries
 
-A library for managing [UnifiedML](github.com/agi-init/UnifiedML) apps on remote servers with SLURM job scheduling.
+A library for managing [UnifiedML](github.com/agi-init/UnifiedML) apps on remote servers with SLURM.
 
 ## 5 setup steps
 
