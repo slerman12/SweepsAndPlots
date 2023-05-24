@@ -15,7 +15,6 @@ def get_pass(kind='pass'):
             key, encoded = file.readlines()
             password = Fernet(key).decrypt(bytes(encoded, 'utf-8'))
         password = password.decode()
-        print(password)
     else:
         password, key = getpass.getpass(f'Enter {kind} pass:'), Fernet.generate_key()
         encoded = Fernet(key).encrypt(bytes(password, 'utf-8'))

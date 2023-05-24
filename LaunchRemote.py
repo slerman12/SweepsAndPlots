@@ -27,6 +27,7 @@ try:
     origin = repo.remote(name='origin')
     origin.push()
     s = pxssh.pxssh()
+    print(username, password)
     s.login(server, username, password)
     s.sendline(f'cd {remote_app_paths["SweepsAndPlots"]}')
     s.prompt()
