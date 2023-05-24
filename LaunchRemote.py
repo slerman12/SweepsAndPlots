@@ -28,7 +28,7 @@ try:
     origin.push()
     s = pxssh.pxssh()
     print(username, password.encode())
-    s.login(server, username, password)
+    s.login(server, username, password.encode())
     s.sendline(f'cd {remote_app_paths["SweepsAndPlots"]}')
     s.prompt()
     print(s.before.decode("utf-8"))
