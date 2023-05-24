@@ -21,13 +21,13 @@ Central = importlib.import_module('Central')
 
 runs = SourceFileLoader(Central.sweep_path, f'{root}/Sweeps/{Central.sweep_path}.py').load_module().runs
 
-_, username, _, _, remote_app_paths, conda, sbatch = Central.get_remote(runs.remote_name)
+_, username, _, _, remote_app_paths, conda, sbatch = Central.get_remote(runs.remote_name, local=False)
 
 path = remote_app_paths[runs.remote_name][runs.app]
 run = Central.remote_app_run_files[runs.remote_name][runs.app]
 
 sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
-meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
+meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name', 'wandb_key'}
 sys.argv.extend(['-cd', path + '/Hyperparams'])  # Adds Hyperparams to Hydra's .yaml search path
 
 # Format path names
@@ -94,7 +94,7 @@ def main(args):
 {extra}
 {sbatch if sbatch else ''}
 {conda if conda else ''}
-{"wandb login " + Central.wandb_login_key if Central.wandb_login_key else ''}'
+{"wandb login " + args.wandb_key if args.wandb_key else ''}'
 python {path}/{run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
 

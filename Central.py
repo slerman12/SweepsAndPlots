@@ -26,12 +26,9 @@ github_username = 'slerman12'
 remote_app_run_files = {'UnifiedML': 'Run.py',
                         'XRDs': 'XRD.py'}  # Names of run files for each UnifiedML app you use
 
-# TODO Delete: 55c12bece18d43a51c2fcbcb5b7203c395f9bc40
-wandb_login_key = None  # Optional wandb login, can be None
-
 
 # Server-specific configs
-def get_remote(remote_name):
+def get_remote(remote_name, local=True):
     """
     Define your own remote server(s) here according to any chosen unique name(s).
 
@@ -73,7 +70,7 @@ def get_remote(remote_name):
     # Examples 2 & 3
     elif remote_name in ['bluehive_csxu', 'bluehive_acmml']:
         server = 'bluehive.circ.rochester.edu'
-        username, password = 'slerman', get_pass('bluehive')
+        username, password = 'slerman', get_pass('bluehive') if local else ''
         vpn = connect_vpn(username)
         remote_path = f'/scratch/{username}'
         remote_app_paths = {'UnifiedML': f"{remote_path}/UnifiedML",

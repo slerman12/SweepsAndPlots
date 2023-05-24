@@ -8,6 +8,7 @@ from pexpect import pxssh
 
 from git import Repo
 
+from GetPass import get_pass
 from Central import sweep_path, get_remote, github_username
 
 runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().runs
@@ -15,6 +16,8 @@ runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().run
 server, username, password, vpn, remote_app_paths, conda, _ = get_remote(runs.remote_name)
 
 vpn()
+
+wandb_key = get_pass('wandb')  # Optional wandb login, can be None or empty string
 
 # Launch
 try:
@@ -56,9 +59,9 @@ try:
         hyperparams = "\t".join(hyperparams.splitlines())
         print(f'Set: {i + 1}')
         print(f'python {remote_app_paths["SweepsAndPlots"]}/Remote/sbatch.py -m {hyperparams}   '
-              f'remote_name={runs.remote_name}"\n')
+              f'remote_name={runs.remote_name}   wandb_key={wandb_key}\n')
         s.sendline(f'python {remote_app_paths["SweepsAndPlots"]}/Remote/sbatch.py -m {hyperparams}   '
-                   f'remote_name={runs.remote_name}')
+                   f'remote_name={runs.remote_name}   wandb_key={wandb_key}')
         s.prompt()
         print(s.before.decode("utf-8"))
     s.logout()

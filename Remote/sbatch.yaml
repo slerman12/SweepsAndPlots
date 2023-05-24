@@ -10,6 +10,7 @@ time: '3-00:00:00'
 reservation_id: null
 task_dir: ${suite}/${task_name}  # Must set manually for non <suite>/<task_name> task-directory structures!
 task: ${task_dir}  # Perhaps not needed
+wandb_key: null
 pseudonym: ${task_name}  # Can change as needed here, but interpolation doesn't seem to work via command line
 remote_name: 'bluehive'
 
