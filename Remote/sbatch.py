@@ -14,10 +14,12 @@ import hydra
 from omegaconf import OmegaConf
 
 
-sys.path.append(f'{os.path.dirname(__file__)}/../')
+root = os.path.dirname(__file__) + '/..'
+
+sys.path.append(root)
 Central = importlib.import_module('Central')
 
-runs = SourceFileLoader(Central.sweep_path, f'Sweeps/{Central.sweep_path}.py').load_module().runs
+runs = SourceFileLoader(Central.sweep_path, f'{root}/Sweeps/{Central.sweep_path}.py').load_module().runs
 
 _, username, _, _, remote_app_paths, conda, sbatch = Central.get_remote(runs.remote_name)
 
