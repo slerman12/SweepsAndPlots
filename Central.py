@@ -26,6 +26,9 @@ github_username = 'slerman12'
 remote_app_run_files = {'UnifiedML': 'Run.py',
                         'XRDs': 'XRD.py'}  # Names of run files for each UnifiedML app you use
 
+# Support for wandb live-plotting (if so, will have to enter wandb login key into console on first run)
+wandb = True
+
 
 # Server-specific configs
 def get_remote(remote_name, local=True):

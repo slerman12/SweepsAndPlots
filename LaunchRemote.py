@@ -9,7 +9,7 @@ from pexpect import pxssh
 from git import Repo
 
 from GetPass import get_pass
-from Central import sweep_path, get_remote, github_username
+from Central import sweep_path, get_remote, wandb, github_username
 
 runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().runs
 
@@ -17,7 +17,7 @@ server, username, password, vpn, remote_app_paths, conda, _ = get_remote(runs.re
 
 vpn()
 
-wandb_key = get_pass('wandb')  # Optional wandb login, can be None or empty string
+wandb_key = get_pass('wandb key') if wandb else ''  # Optional wandb login, can be None or empty string
 
 # Launch
 try:
@@ -27,7 +27,6 @@ try:
     origin = repo.remote(name='origin')
     origin.push()
     s = pxssh.pxssh()
-    print(server, username, password.encode())
     s.login(server, username, password)
     s.sendline(f'cd {remote_app_paths["SweepsAndPlots"]}')
     s.prompt()
