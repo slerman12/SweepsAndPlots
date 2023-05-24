@@ -8,8 +8,8 @@ import os
 from cryptography.fernet import Fernet
 
 
-def safe_pass(kind='pass'):
-    # Get password, encrypt, and save for reuse - locally only!
+def get_pass(kind='pass'):
+    # Get password, encrypt, and save for reuse -- locally only of course
     if os.path.exists(f'.{kind}'):
         with open(f'.{kind}', 'r') as file:
             key, encoded = file.readlines()

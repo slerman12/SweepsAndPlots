@@ -8,7 +8,7 @@ from pexpect import pxssh
 
 from git import Repo
 
-from SafePass import safe_pass
+from SafePass import get_pass
 from Central import sweep_path, get_remote, wandb, github_username
 
 runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().runs
@@ -17,7 +17,7 @@ server, username, password, vpn, remote_app_paths, conda, _ = get_remote(runs.re
 
 vpn()
 
-wandb_key = safe_pass('wandb') if wandb else ''  # Optional wandb login, can be None or empty string
+wandb_key = get_pass('wandb') if wandb else ''  # Optional wandb login, can be None or empty string
 
 # Launch
 try:

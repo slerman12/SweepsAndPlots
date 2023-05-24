@@ -4,13 +4,13 @@
 # MIT_LICENSE file in the root directory of this source tree.
 from pexpect import spawn
 
-from SafePass import safe_pass
+from SafePass import get_pass
 
 
 def connect_vpn(username='slerman'):
     def _connect_vpn():
         try:
-            password = safe_pass('bluehive')
+            password = get_pass('bluehive')
             p = spawn('/opt/cisco/anyconnect/bin/vpn connect vpnconnect.rochester.edu')
             p.expect('Username: ')
             p.sendline('')
