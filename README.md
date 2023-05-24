@@ -19,6 +19,7 @@ Most of them involve just getting this repo under your GitHub account.
 * Or make your version public.
 
 **Step 5.** On your local machine, modify your [```Central.py```](Central.py) file with the correct info/credentials of your remote server(s).
+* Read the docstrings for help.
 
 ## Defining experiment sweeps
 
