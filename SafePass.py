@@ -9,7 +9,7 @@ from cryptography.fernet import Fernet
 
 
 def safe_pass(kind='pass'):
-    # Get password, encrypt, and save for reuse
+    # Get password, encrypt, and save for reuse - locally only!
     if os.path.exists(f'.{kind}'):
         with open(f'.{kind}', 'r') as file:
             key, encoded = file.readlines()
