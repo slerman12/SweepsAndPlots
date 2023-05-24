@@ -8,7 +8,7 @@ import os
 from cryptography.fernet import Fernet
 
 
-def get_pass(kind='pass'):
+def safe_pass(kind='pass'):
     # Get password, encrypt, and save for reuse
     if os.path.exists(f'.{kind}'):
         with open(f'.{kind}', 'r') as file:

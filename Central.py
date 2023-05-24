@@ -7,7 +7,7 @@ Selecting sweep, UnifiedML local path, and configurations for remote servers.
 Modify this file with your info.
 """
 
-from GetSafePass import get_pass
+from SafePass import safe_pass
 from VPN import connect_vpn
 
 # Example sweep in Sweeps/UnifiedML/Atari.py
@@ -73,7 +73,7 @@ def get_remote(remote_name, local=True):
     # Examples 2 & 3
     elif remote_name in ['bluehive_csxu', 'bluehive_acmml']:
         server = 'bluehive.circ.rochester.edu'
-        username, password = 'slerman', get_pass('bluehive') if local else ''
+        username, password = 'slerman', safe_pass('bluehive') if local else ''
         vpn = connect_vpn(username)
         remote_path = f'/scratch/{username}'
         remote_app_paths = {'UnifiedML': f"{remote_path}/UnifiedML",
