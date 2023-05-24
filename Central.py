@@ -11,7 +11,7 @@ from GetPass import get_pass
 from VPN import connect_vpn
 
 # Example sweep in Sweeps/UnifiedML/Atari.py
-sweep_path = 'XRD/MultiTask'  # Note to self: can make this a sys arg
+sweep_path = 'XRD/Paper1'  # Note to self: can make this a sys arg
 
 # Make sure to define the path to your local UnifiedML for plotting - later can use import pip package
 UnifiedML_local_path = '../UnifiedML'
