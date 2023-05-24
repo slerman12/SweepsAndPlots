@@ -4,7 +4,7 @@
 # MIT_LICENSE file in the root directory of this source tree.
 import shutil
 import subprocess
-import sys
+import os, sys
 from pathlib import Path
 from importlib.machinery import SourceFileLoader
 
