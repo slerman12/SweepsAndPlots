@@ -6,6 +6,7 @@
 Structure of template:
     -> Sweep
     -> Plots
+    -> Launching metadata
     -> Plots metadata
 """
 
@@ -19,11 +20,12 @@ def template():
             # Sets of plots
             [],
         ],
-
-        # Plotting-related commands go here
-        'sftp': True,
+        # Launching-related commands
+        'app': 'UnifiedML',
         'remote_name': None,
         'branch': 'master',
+        # Plotting-related commands go here
+        'sftp': True,
         'write_tabular': False,
         'steps': None,
         'title': 'UnifiedML',
