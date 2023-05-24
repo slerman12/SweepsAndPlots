@@ -46,7 +46,7 @@ if runs.sftp:
         print('- Connected! ✓\n')
         p.sendline(f"lcd {local_path}")
         p.expect('sftp> ', timeout=None)
-        p.sendline(f"cd {remote_app_paths[runs.remote_name][runs.app]}")
+        p.sendline(f"cd {remote_app_paths[runs.app]}")
         p.expect('sftp> ', timeout=None)
         for i, experiment in enumerate(experiments):
             print(f'{i + 1}/{len(experiments)} [bluehive] SFTP\'ing "{experiment}"')
@@ -64,7 +64,7 @@ if runs.sftp:
         # SFTP can't access ~/, so need full path
         lab_paths = ['/localdisk2/sam', '/home/vax10/u38/slerman', '/cxu-serve/u1/slerman']
         for i, path in enumerate(lab_paths):  # Note: latest one overrides
-            p.sendline(f'cd {remote_app_paths[runs.remote_name][runs.app]}')
+            p.sendline(f'cd {remote_app_paths[runs.app]}')
             p.expect('sftp> ')
             for j, experiment in enumerate(experiments):
                 if experiment not in runs.bluehive_only:
