@@ -83,7 +83,8 @@ def main(args):
 
     # Note: specifying GPU type via args.gpu seems to work on Bluehive but not all clusters, leaving it
     # bluehive-specific for now, but should work in the general case
-    extra = f'#SBATCH -C {args.gpu}' if args.num_gpus and 'bluehive' in runs.remote_name else ''
+    # extra = f'#SBATCH -C {args.gpu}' if args.num_gpus and 'bluehive' in runs.remote_name else ''
+    extra = ''
 
     script = f"""#!/bin/bash
 #SBATCH -c {args.num_workers + 1}
