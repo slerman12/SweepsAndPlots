@@ -26,7 +26,7 @@ Select the sweep file you want to launch/plot by pointing to it with the [```swe
 
 ## Automatic launching
 
-Launch selected sweeps remotely via ```python LaunchRemote.py```.
+Launch selected sweeps remotely (from locally) via ```python LaunchRemote.py```.
 
 ## Automatic plotting
 
