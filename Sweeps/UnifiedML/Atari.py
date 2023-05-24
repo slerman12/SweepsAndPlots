@@ -52,7 +52,7 @@ runs.sweep = [
 
 runs.plots = [
     ['Atari26-LessExplore']
-]
+]  # Lists of experiments to plot together
 
 runs.remote_name = 'iris/retina'
 runs.title = 'Atari-26'

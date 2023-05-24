@@ -18,6 +18,7 @@ runs.sweep = [
     mem=80""",
 ]
 
+# Lists of experiments to plot together
 runs.plots = [
     ['NPCNN'],
 ]
