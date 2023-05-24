@@ -18,7 +18,7 @@ vpn()
 
 # Launch
 try:
-    repo = Repo()
+    repo = Repo('.')
     repo.git.add(update=True)
     repo.index.commit('Launch')
     origin = repo.remote(name='origin')
