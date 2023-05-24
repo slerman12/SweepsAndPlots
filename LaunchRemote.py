@@ -55,9 +55,9 @@ try:
     for i, hyperparams in enumerate(runs.sweep):
         hyperparams = "\t".join(hyperparams.splitlines())
         print(f'Set: {i + 1}')
-        print(f'python {remote_app_paths["SweepsNPlots"]}/Remote/sbatch.py -m {hyperparams}   '
+        print(f'python {remote_app_paths["SweepsAndPlots"]}/Remote/sbatch.py -m {hyperparams}   '
               f'remote_name={runs.remote_name}"\n')
-        s.sendline(f'python {remote_app_paths["SweepsNPlots"]}/Remote/sbatch.py -m {hyperparams}   '
+        s.sendline(f'python {remote_app_paths["SweepsAndPlots"]}/Remote/sbatch.py -m {hyperparams}   '
                    f'remote_name={runs.remote_name}')
         s.prompt()
         print(s.before.decode("utf-8"))
