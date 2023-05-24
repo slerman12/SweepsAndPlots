@@ -1,6 +1,6 @@
 # Tributaries
 
-A library for managing [UnifiedML](github.com/agi-init/UnifiedML) apps on remote servers that support SLURM job scheduling.
+A library for managing [UnifiedML](github.com/agi-init/UnifiedML) apps on remote servers that have set up SLURM job scheduling.
 
 Helps with running many experiments quickly, and plotting them right away. No need to interface with the remote machine, sbatch scripts, or anything. Just run and done.
 
