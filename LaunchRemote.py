@@ -16,11 +16,9 @@ server, username, password, vpn, remote_app_paths, conda, _ = get_remote(runs.re
 
 vpn()
 
-runs.branch = runs.branch or "master"
-
 # Launch
 try:
-    repo = Repo(f'github.com/{github_username}/SweepsAndPlots')
+    repo = Repo()
     repo.git.add(update=True)
     repo.index.commit('Launch')
     origin = repo.remote(name='origin')

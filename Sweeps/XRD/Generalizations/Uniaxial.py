@@ -36,5 +36,6 @@ runs.plots = [
     ['090', '095', '099'],
 ]
 
+runs.branch = 'main'
 runs.remote_name = 'bluehive_acmml'
 runs.title = 'Uniaxial - NPCNN - Trained on synthetic + 50% RRUFF'

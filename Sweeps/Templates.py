@@ -23,6 +23,7 @@ def template():
         # Plotting-related commands go here
         'sftp': True,
         'remote_name': None,
+        'branch': 'master',
         'write_tabular': False,
         'steps': None,
         'title': 'UnifiedML',

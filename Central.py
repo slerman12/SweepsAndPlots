@@ -7,7 +7,8 @@ Selecting sweep, UnifiedML local path, and configurations for remote servers.
 Modify this file with your info.
 """
 
-from VPN import connect_vpn, get_pass
+from GetPass import get_pass
+from VPN import connect_vpn
 
 # Example sweep in Sweeps/UnifiedML/Atari.py
 sweep_path = 'XRD/MultiTask'  # Note to self: can make this a sys arg
