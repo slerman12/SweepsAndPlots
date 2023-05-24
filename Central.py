@@ -27,7 +27,7 @@ remote_app_run_files = {'UnifiedML': 'Run.py',
                         'XRDs': 'XRD.py'}  # Names of run files for each UnifiedML app you use
 
 # TODO Delete: 55c12bece18d43a51c2fcbcb5b7203c395f9bc40
-wandb_login_key = get_pass('wandb')  # Optional wandb login, can be None
+wandb_login_key = None  # Optional wandb login, can be None
 
 
 # Server-specific configs

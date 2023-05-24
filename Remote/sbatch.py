@@ -6,7 +6,7 @@ import os
 import sys
 import shutil
 import subprocess
-import importlib.util
+import importlib
 from importlib.machinery import SourceFileLoader
 from pathlib import Path
 
