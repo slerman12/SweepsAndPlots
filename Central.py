@@ -83,9 +83,8 @@ def get_remote(remote_name, local=True):
         conda = f'GPU_TYPE' \
                 f'=$(nvidia-smi --query-gpu=gpu_name --format=csv | tail  -1)\ncase $GPU_TYPE in\n{conda}esac'
 
-        sbatch = f"""{'#SBATCH -p csxu -A cxu22_lab' if remote_name == 'bluehive_csxu'
-        else f'#SBATCH -p acmml -A cxu22_lab' if remote_name == 'bluehive_acmml' else ''}
-        module load gcc"""
+        sbatch = '#SBATCH -p csxu -A cxu22_lab\nmodule load gcc' if remote_name == 'bluehive_csxu' \
+            else '#SBATCH -p acmml -A cxu22_lab\nmodule load gcc'
     else:
         assert False, 'Invalid remote name.'
 
