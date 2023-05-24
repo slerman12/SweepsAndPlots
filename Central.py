@@ -10,7 +10,7 @@ Modify this file with your info.
 from SafePass import safe_pass
 from VPN import connect_vpn
 
-# Example sweep in Sweeps/UnifiedML/Atari.py
+# Example sweep in Sweeps/XRD/Paper1.py
 sweep_path = 'XRD/Paper1'  # Note to self: can make this a sys arg
 
 # Make sure to define the path to your local UnifiedML for plotting - later can use import pip package
