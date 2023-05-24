@@ -1,4 +1,4 @@
-# Tributaries :ocean:
+# Tributaries 
 
 A library for managing [UnifiedML](github.com/agi-init/UnifiedML) apps on remote servers that supports slurm-enabled clusters.
 
