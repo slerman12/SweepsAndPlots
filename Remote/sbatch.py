@@ -2,24 +2,28 @@
 #
 # This source code is licensed under the MIT license found in the
 # MIT_LICENSE file in the root directory of this source tree.
+import os
+import sys
 import shutil
 import subprocess
-import os, sys
-from pathlib import Path
+import importlib.util
 from importlib.machinery import SourceFileLoader
+from pathlib import Path
 
 import hydra
 from omegaconf import OmegaConf
 
-from ..Central import sweep_path, get_remote, remote_app_run_files, wandb_login_key
 
+spec = importlib.util.spec_from_file_location('Central', f'{os.path.dirname(__file__)}/../Central.py')
+Central = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(Central)
 
-runs = SourceFileLoader(sweep_path, f'Sweeps/{sweep_path}.py').load_module().runs
+runs = SourceFileLoader(Central.sweep_path, f'Sweeps/{Central.sweep_path}.py').load_module().runs
 
-_, username, _, _, remote_app_paths, conda, sbatch = get_remote(runs.remote_name)
+_, username, _, _, remote_app_paths, conda, sbatch = Central.get_remote(runs.remote_name)
 
 path = remote_app_paths[runs.remote_name][runs.app]
-run = remote_app_run_files[runs.remote_name][runs.app]
+run = Central.remote_app_run_files[runs.remote_name][runs.app]
 
 sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
 meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name'}
@@ -89,7 +93,7 @@ def main(args):
 {extra}
 {sbatch if sbatch else ''}
 {conda if conda else ''}
-{"wandb login " + wandb_login_key if wandb_login_key else ''}'
+{"wandb login " + Central.wandb_login_key if Central.wandb_login_key else ''}'
 python {path}/{run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
 
