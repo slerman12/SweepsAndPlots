@@ -12,7 +12,7 @@ runs.sweep = [
     save_per_steps=1e5
     +'dataset.roots=["/gpfs/fs2/scratch/public/jsalgad2/icsd1.2m_large/","./Data/Generated/XRDs_RRUFF/"]'
     +'dataset.train_eval_splits=[1, 0.5]'
-    num_workers=8
+    num_workers=1
     mem=80""",
 ]
 
