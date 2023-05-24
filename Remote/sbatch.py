@@ -14,9 +14,8 @@ import hydra
 from omegaconf import OmegaConf
 
 
-spec = importlib.util.spec_from_file_location('Central', f'{os.path.dirname(__file__)}/../Central.py')
-Central = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(Central)
+sys.path.append(f'{os.path.dirname(__file__)}/../Central.py')
+Central = importlib.import_module('Central')
 
 runs = SourceFileLoader(Central.sweep_path, f'Sweeps/{Central.sweep_path}.py').load_module().runs
 
