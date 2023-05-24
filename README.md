@@ -22,7 +22,7 @@ Create sweep files like [this one](Sweeps/XRD/Paper1.py), where you can define w
 
 ## Selecting a sweep
 
-Select the sweep file you want to launch/plot by pointing to it with the ```sweep_path=``` variable at the top of [```Central.py```](Central.py#L14).
+Select the sweep file you want to launch/plot by pointing to it with the [```sweep_path=```](Central.py#L14) variable at the top of [```Central.py```](Central.py#L14).
 
 ## Automatic launching
 
