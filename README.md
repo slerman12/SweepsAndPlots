@@ -24,11 +24,11 @@ Create sweep files like [this one](Sweeps/XRD/Paper1.py), where you can define w
 
 Select the sweep file you want to launch/plot by pointing to it with the [```sweep_path=```](Central.py#L14) variable at the top of [```Central.py```](Central.py#L14).
 
-## Automatic launching
+## Automatic launching from your local machine
 
-From your local machine, launch selected sweeps remotely via ```python LaunchRemote.py```.
+Launch selected sweeps remotely via ```python LaunchRemote.py```.
 
-## Automatic plotting
+## Automatic plotting from your local machine
 
 Plot selected sweeps locally via ```python PlotRemote.py```.
 
