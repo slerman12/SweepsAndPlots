@@ -19,5 +19,4 @@ def get_pass(kind='pass'):
         encoded = Fernet(key).encrypt(bytes(password, 'utf-8'))
         with open(f'.{kind}', 'w') as file:
             file.writelines([key.decode('utf-8') + '\n', encoded.decode('utf-8')])
-        os.system(f'attrib +h .{kind}')  # Make hidden
     return password
