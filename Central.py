@@ -77,7 +77,7 @@ def get_remote(remote_name, local=True):
         vpn = connect_vpn(username)
         remote_path = f'/scratch/{username}'
         remote_app_paths = {'UnifiedML': f"{remote_path}/UnifiedML",
-                            'SweepsAndPlots': f"{remote_path}/SweepsAndPlots",
+                            'SweepsAndPlots': f"{remote_path}/SweepsAndPlots",  # TODO Rename to Tributaries
                             'XRDs': f"{remote_path}/XRDs"}
         conda = f'source /home/{username}/miniconda3/bin/activate'
         conda = ''.join([f'*"{gpu}"*)\n{conda} {env}\n;;\n'
