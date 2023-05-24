@@ -27,7 +27,7 @@ remote_app_run_files = {'UnifiedML': 'Run.py',
                         'XRDs': 'XRD.py'}  # Names of run files for each UnifiedML app you use
 
 # Support for wandb live-plotting (if so, will have to enter wandb login key into console on first run)
-wandb = True
+wandb = False
 
 
 # Server-specific configs
