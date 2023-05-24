@@ -16,7 +16,7 @@ A library for managing [UnifiedML](github.com/agi-init/UnifiedML) apps on remote
 
 **Step 5.** On your local machine, modify your [```Central.py```](Central.py) with the correct info/credentials of your remote server(s).
 
-## Defining sweeps
+## Defining experiment sweeps
 
 Create sweep files like [this one](Sweeps/XRD/Paper1.py), where you can define what set of experiments to launch and how to plot them.
 
