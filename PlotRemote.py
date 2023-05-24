@@ -96,3 +96,5 @@ for plot_train in [False, True]:
              title=runs.title, x_axis=runs.x_axis,
              verbose=True
              )
+
+print(f'Plots saved to Benchmarking/{sweep_path.rsplit("/", 1)[0]}.')
