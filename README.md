@@ -34,4 +34,4 @@ Plot selected sweeps locally via ```python PlotRemote.py```.
 
 #
 
-[This code is licensed under the MIT license.](MIT_LICENSE)
+[Licensed under the MIT license.](MIT_LICENSE)
