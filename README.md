@@ -1,8 +1,6 @@
 # Tributaries
 
-A library for managing [UnifiedML](github.com/agi-init/UnifiedML) apps on remote servers that have set up SLURM job scheduling.
-
-Helps with running many experiments quickly, from your local setup. Deploys and plots.
+A library for managing [UnifiedML](github.com/agi-init/UnifiedML) apps on remote servers that support SLURM job scheduling.
 
 ## 5 setup steps
 
@@ -36,4 +34,4 @@ Plot selected sweeps locally via ```python PlotRemote.py```.
 
 #
 
-[MIT license](MIT_LICENSE)
+[Licensed under the MIT license.](MIT_LICENSE)
