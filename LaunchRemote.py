@@ -17,7 +17,7 @@ server, username, password, vpn, remote_app_paths, conda, _ = get_remote(runs.re
 
 vpn()
 
-wandb_key = get_pass('wandb')  # Optional wandb login, can be None or empty string
+wandb_key = get_pass('wandb').decode()  # Optional wandb login, can be None or empty string
 
 # Launch
 try:
