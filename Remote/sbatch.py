@@ -96,8 +96,8 @@ def main(args):
 {sbatch if sbatch else ''}
 {conda if conda else ''}
 echo {args.wandb_key}
-{"wandb login " + args.wandb_key if args.wandb_key else ''}
-python {path}/{run} {" ".join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
+{'wandb login ' + args.wandb_key if args.wandb_key else ''}
+python {path}/{run} {' '.join([f"'{key}={getattr_recursive(args, key.strip('+'))}'" for key in sys_args - meta])}
 """
 
     # Write script
