@@ -2,7 +2,7 @@
 
 A library for managing [UnifiedML](github.com/agi-init/UnifiedML) apps on remote servers that have set up SLURM job scheduling.
 
-Helps with running many experiments quickly, and plotting them right away. No need to interface with the remote machine, sbatch scripts, or anything. Just run and done.
+Helps with running many experiments quickly, from your local setup.
 
 ## 5 setup steps
 
