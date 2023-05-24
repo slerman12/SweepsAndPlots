@@ -24,7 +24,7 @@ runs = SourceFileLoader(Central.sweep_path, f'{root}/Sweeps/{Central.sweep_path}
 _, username, _, _, remote_app_paths, conda, sbatch = Central.get_remote(runs.remote_name, local=False)
 
 path = remote_app_paths[runs.app]
-run = Central.remote_app_run_files[runs.remote_name][runs.app]
+run = Central.remote_app_run_files[runs.app]
 
 sys_args = {arg.split('=')[0].strip('"').strip("'") for arg in sys.argv[1:]}
 meta = {'num_gpus', 'gpu', 'mem', 'time', 'reservation_id', '-m', 'task_dir', 'pseudonym', 'remote_name', 'wandb_key'}
