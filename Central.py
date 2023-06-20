@@ -10,7 +10,7 @@ Modify this file with your info.
 from SafePass import get_pass
 from VPN import connect_vpn
 
-# Example sweep in Sweeps/XRD/Paper1.py
+# Example sweep in Sweeps/XRD/Paper1.py - must be in Sweeps/ dir
 sweep_path = 'XRD/Paper1'  # Note to self: can make this a sys arg
 
 # Make sure to define the path to your local UnifiedML for plotting - later can use import pip package
@@ -87,7 +87,7 @@ def get_remote(remote_name, local=True):
                 f'=$(nvidia-smi --query-gpu=gpu_name --format=csv | tail  -1)\ncase $GPU_TYPE in\n{conda}esac'
 
         sbatch = '#SBATCH -p csxu -A cxu22_lab\nmodule load gcc' if remote_name == 'bluehive_csxu' \
-            else '#SBATCH -p acmml -A cxu22_lab\nmodule load gcc'
+            else '#SBATCH -p acmml -A acmml2\nmodule load gcc'
     else:
         assert False, 'Invalid remote name.'
 
