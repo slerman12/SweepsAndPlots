@@ -33,7 +33,7 @@ You can define sweep files like this one:
 # path/to/my/sweep.py
 from tributaries import my_sweep
 
-my_sweep.extend(['...', '...'])  # List of hyperparams
+my_sweep.hyperparams.extend(['...', '...'])  # List of hyperparams
 my_sweep.app = 'UnifiedML'
 ...
 ```
